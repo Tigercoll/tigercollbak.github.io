@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"tigercoll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1.进程线程协程的区别?1234进程:计算机中资源分配的最小单位.线程:计算机中CPU调度的最小单位.协程:又称为&#39;微线程&#39;,在计算机中不是真实存在,而是程序员通过代码伪造出来的.一个进程中可以有多个线程,一个线程又可以创建多个协程,在cPython中海油一个GIL,全局解释器锁(同一时刻,一个进程中只有一个线程可以被CPU调度),由于GIL的存在,导致Python中:计算密集型用">
+  <meta name="description" content="设置 SSH 通过密钥登录我们一般使用 xshell 等 SSH 客户端来远程管理 Linux 服务器。但是，一般的密码方式登录，容易有密码被暴力破解的问题。所以，一般我们会将 SSH 的端口设置为默认的 22 以外的端口，或者禁用 root 账户登录。其实，有一个更好的办法来保证安全，而且让你可以放心地用 root 账户从远程登录——那就是通过密钥方式登录。 密钥形式登录的原理是：利用密钥生成器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="进程线程协程的区别">
-<meta property="og:url" content="https://tigercoll.github.io/2020/05/17/1.%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:title" content="设置SSH 通过密钥登录">
+<meta property="og:url" content="https://tigercoll.github.io/2020/05/28/%E8%AE%BE%E7%BD%AESSH-%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/index.html">
 <meta property="og:site_name" content="Tigercoll&#39;s blog">
-<meta property="og:description" content="1.进程线程协程的区别?1234进程:计算机中资源分配的最小单位.线程:计算机中CPU调度的最小单位.协程:又称为&#39;微线程&#39;,在计算机中不是真实存在,而是程序员通过代码伪造出来的.一个进程中可以有多个线程,一个线程又可以创建多个协程,在cPython中海油一个GIL,全局解释器锁(同一时刻,一个进程中只有一个线程可以被CPU调度),由于GIL的存在,导致Python中:计算密集型用">
+<meta property="og:description" content="设置 SSH 通过密钥登录我们一般使用 xshell 等 SSH 客户端来远程管理 Linux 服务器。但是，一般的密码方式登录，容易有密码被暴力破解的问题。所以，一般我们会将 SSH 的端口设置为默认的 22 以外的端口，或者禁用 root 账户登录。其实，有一个更好的办法来保证安全，而且让你可以放心地用 root 账户从远程登录——那就是通过密钥方式登录。 密钥形式登录的原理是：利用密钥生成器">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-05-17T13:18:22.215Z">
-<meta property="article:modified_time" content="2020-05-18T04:20:50.769Z">
+<meta property="article:published_time" content="2020-05-28T12:45:37.143Z">
+<meta property="article:modified_time" content="2020-05-28T12:47:47.879Z">
 <meta property="article:author" content="Tigercoll">
-<meta property="article:tag" content="python">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="ssh">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://tigercoll.github.io/2020/05/17/1.%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB/">
+<link rel="canonical" href="https://tigercoll.github.io/2020/05/28/%E8%AE%BE%E7%BD%AESSH-%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>进程线程协程的区别 | Tigercoll's blog</title>
+  <title>设置SSH 通过密钥登录 | Tigercoll's blog</title>
   
 
 
@@ -166,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://tigercoll.github.io/2020/05/17/1.%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB/">
+    <link itemprop="mainEntityOfPage" href="https://tigercoll.github.io/2020/05/28/%E8%AE%BE%E7%BD%AESSH-%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/p1.jpg">
@@ -179,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          进程线程协程的区别
+          设置SSH 通过密钥登录
         </h1>
 
         <div class="post-meta">
@@ -188,23 +190,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-05-17 21:18:22" itemprop="dateCreated datePublished" datetime="2020-05-17T21:18:22+08:00">2020-05-17</time>
+              <time title="创建时间：2020-05-28 20:45:37 / 修改时间：20:47:47" itemprop="dateCreated datePublished" datetime="2020-05-28T20:45:37+08:00">2020-05-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-18 12:20:50" itemprop="dateModified" datetime="2020-05-18T12:20:50+08:00">2020-05-18</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                  <a href="/categories/LINUX/" itemprop="url" rel="index"><span itemprop="name">LINUX</span></a>
                 </span>
             </span>
 
@@ -219,8 +215,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="1-进程线程协程的区别"><a href="#1-进程线程协程的区别" class="headerlink" title="1.进程线程协程的区别?"></a>1.进程线程协程的区别?</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">进程:计算机中资源分配的最小单位.</span><br><span class="line">线程:计算机中CPU调度的最小单位.</span><br><span class="line">协程:又称为&#39;微线程&#39;,在计算机中不是真实存在,而是程序员通过代码伪造出来的.</span><br><span class="line">一个进程中可以有多个线程,一个线程又可以创建多个协程,在cPython中海油一个GIL,全局解释器锁(同一时刻,一个进程中只有一个线程可以被CPU调度),由于GIL的存在,导致Python中:计算密集型用进程,IO密集型用线程(协程)</span><br></pre></td></tr></table></figure>
+        <h1 id="设置-SSH-通过密钥登录"><a href="#设置-SSH-通过密钥登录" class="headerlink" title="设置 SSH 通过密钥登录"></a>设置 SSH 通过密钥登录</h1><p>我们一般使用 xshell 等 SSH 客户端来远程管理 Linux 服务器。但是，一般的密码方式登录，容易有密码被暴力破解的问题。所以，一般我们会将 SSH 的端口设置为默认的 22 以外的端口，或者禁用 root 账户登录。其实，有一个更好的办法来保证安全，而且让你可以放心地用 root 账户从远程登录——那就是通过密钥方式登录。</p>
+<p>密钥形式登录的原理是：利用密钥生成器制作一对密钥——一只公钥和一只私钥。将公钥添加到服务器的某个账户上，然后在客户端利用私钥即可完成认证并登录。这样一来，没有私钥，任何人都无法通过 SSH 暴力破解你的密码来远程登录到系统。此外，如果将公钥复制到其他账户甚至主机，利用私钥也可以登录。</p>
+<a id="more"></a>
 
+<h2 id="制作密钥对"><a href="#制作密钥对" class="headerlink" title="制作密钥对"></a>制作密钥对</h2><p>首先在服务器上制作密钥对。首先用密码登录到你打算使用密钥登录的账户，然后执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@10-7-189-100 ~]<span class="comment"># ssh-keygen   # 建立密钥对</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa):  <span class="comment"># 按回车</span></span><br><span class="line">Created directory <span class="string">'/root/.ssh'</span>.</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):  	<span class="comment"># 输入密钥密码或者直接回车</span></span><br><span class="line">Enter same passphrase again: 					<span class="comment"># 再次确认密码</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.  <span class="comment"># 私钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub.  <span class="comment"># 公钥</span></span><br><span class="line">The key fingerprint is:</span><br><span class="line">6c:ab:06:cf:d1:c5:22:89:2a:89:91:bf:66:e5:79:8e root@10-7-189-100</span><br><span class="line">The key<span class="string">'s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">|                 |</span></span><br><span class="line"><span class="string">|                 |</span></span><br><span class="line"><span class="string">| .   . . .       |</span></span><br><span class="line"><span class="string">|o   . o.. o      |</span></span><br><span class="line"><span class="string">|.+ .   oSo       |</span></span><br><span class="line"><span class="string">|+ o o ....       |</span></span><br><span class="line"><span class="string">| . + = ..        |</span></span><br><span class="line"><span class="string">|  + o.=.         |</span></span><br><span class="line"><span class="string">| o  E+o          |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="在服务器上安装公钥"><a href="#在服务器上安装公钥" class="headerlink" title="在服务器上安装公钥"></a>在服务器上安装公钥</h2><p>键入以下命令，在服务器上安装公钥：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@10-7-189-100 ~]# cd .ssh</span><br><span class="line">[root@10-7-189-100 .ssh]# ls</span><br><span class="line">id_rsa  id_rsa.pub</span><br><span class="line">[root@10-7-189-100 .ssh]# cat id_rsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>如此便完成了公钥的安装。为了确保连接成功，请保证以下文件权限正确：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@10-7-189-100 .ssh]# chmod 600 authorized_keys </span><br><span class="line">[root@10-7-189-100 .ssh]# chmod 700 ~/.ssh</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="设置SSH-修改配置文件"><a href="#设置SSH-修改配置文件" class="headerlink" title="设置SSH,修改配置文件"></a>设置SSH,修改配置文件</h2><p>编辑 <code>/etc/ssh/sshd_config</code>文件，进行如下设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@10-7-189-100 .ssh]<span class="comment"># vi /etc/ssh/sshd_config </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到这两个去掉 注释即可</span></span><br><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br></pre></td></tr></table></figure>
+
+<p>另外，请留意 root 用户能否通过 SSH 登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
+
+<p>重启 SSH 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@host .ssh]$ service sshd restart</span><br></pre></td></tr></table></figure>
+
+<p>最后,当你完成全部设置，并以密钥方式登录成功后，再禁用密码登录：<font color='red'>切记一定要可以通过密钥登录了之后再取消密码登录</font></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PasswordAuthentication no</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -245,7 +265,9 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+              <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
+              <a href="/tags/ssh/" rel="tag"><i class="fa fa-tag"></i> ssh</a>
           </div>
 
         
@@ -253,11 +275,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/05/17/JSONP%E4%BB%8B%E7%BB%8D/" rel="next" title="JSONP介绍">
-      JSONP介绍 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/05/25/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F(%E5%A4%8D%E5%88%B6,%E7%B2%98%E8%B4%B4,%E7%A7%BB%E5%8A%A8)/" rel="prev" title="文件管理系统(复制,粘贴,移动)">
+      <i class="fa fa-chevron-left"></i> 文件管理系统(复制,粘贴,移动)
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -321,7 +343,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-进程线程协程的区别"><span class="nav-number">1.</span> <span class="nav-text">1.进程线程协程的区别?</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设置-SSH-通过密钥登录"><span class="nav-number">1.</span> <span class="nav-text">设置 SSH 通过密钥登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#制作密钥对"><span class="nav-number">1.1.</span> <span class="nav-text">制作密钥对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在服务器上安装公钥"><span class="nav-number">1.2.</span> <span class="nav-text">在服务器上安装公钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置SSH-修改配置文件"><span class="nav-number">1.3.</span> <span class="nav-text">设置SSH,修改配置文件</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

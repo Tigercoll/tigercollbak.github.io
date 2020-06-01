@@ -27,15 +27,16 @@
 <meta property="og:site_name" content="Tigercoll&#39;s blog">
 <meta property="og:description" content="通过手机短信发送验证码，是最普遍、最安全验证用户真实身份的方式。目前，短信验证码广泛应用于用户注册、密码找回、登录保护、身份认证、随机密码、交易确认等应用场景。 为什么是腾讯云短信?因为腾讯云短信注册送200条短信,每个月会送你100条短信,对于我们这样的小破站,或者测试一下功能来说,完全是足够了的.">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1/image-20200601230018859.png">
 <meta property="og:image" content="https://tigercoll.github.io/images/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1/image-20200601223424296.png">
 <meta property="og:image" content="https://tigercoll.github.io/images/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1/image-20200601224211866.png">
 <meta property="article:published_time" content="2020-06-01T14:03:08.256Z">
-<meta property="article:modified_time" content="2020-06-01T14:54:31.865Z">
+<meta property="article:modified_time" content="2020-06-01T15:00:24.957Z">
 <meta property="article:author" content="Tigercoll">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="send_sms">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://tigercoll.github.io/images/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1/image-20200601223424296.png">
+<meta name="twitter:image" content="https://tigercoll.github.io/images/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1/image-20200601230018859.png">
 
 <link rel="canonical" href="https://tigercoll.github.io/2020/06/01/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1/">
 
@@ -203,7 +204,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-06-01 22:03:08 / 修改时间：22:54:31" itemprop="dateCreated datePublished" datetime="2020-06-01T22:03:08+08:00">2020-06-01</time>
+              <time title="创建时间：2020-06-01 22:03:08 / 修改时间：23:00:24" itemprop="dateCreated datePublished" datetime="2020-06-01T22:03:08+08:00">2020-06-01</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,6 +239,11 @@
 <a id="more"></a>
 
 <h2 id="注册腾讯云"><a href="#注册腾讯云" class="headerlink" title="注册腾讯云"></a>注册腾讯云</h2><p>注册腾讯云就相当简单了,只需要注册过腾讯相关产品扫描二维码即可.</p>
+<h2 id="开通云短信"><a href="#开通云短信" class="headerlink" title="开通云短信"></a>开通云短信</h2><p>腾讯云注册成功之后，登录腾讯云并去开通 云短信服务，开通短信服务后才能发短信。</p>
+<p>开通地址：<a href="https://console.cloud.tencent.com/smsv2" target="_blank" rel="noopener">https://console.cloud.tencent.com/smsv2</a></p>
+<p>根据流程进行开通之后，就可以进入云短信控制台</p>
+<h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><p>创建应用并将应用中生成的 <code>SDK AppID</code>和 <code>App Key</code> 复制下来，之后通过python发送短信时需要用到。</p>
+<p><img src="/images/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1/image-20200601230018859.png" alt=""></p>
 <h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>点击控制台→在云产品中搜索短信即可找到短信相关,</p>
 <p>想要发送短信需要创建两个东西</p>
 <h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><p><img src="/images/%E8%85%BE%E8%AE%AF%E4%BA%91%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1/image-20200601223424296.png" alt=""></p>
@@ -379,7 +385,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是腾讯云短信"><span class="nav-number">1.</span> <span class="nav-text">为什么是腾讯云短信?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册腾讯云"><span class="nav-number">2.</span> <span class="nav-text">注册腾讯云</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速入门"><span class="nav-number">3.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#签名"><span class="nav-number">3.1.</span> <span class="nav-text">签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文模板"><span class="nav-number">3.2.</span> <span class="nav-text">正文模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送短信"><span class="nav-number">3.3.</span> <span class="nav-text">发送短信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDK3-0"><span class="nav-number">3.3.1.</span> <span class="nav-text">SDK3.0</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#发送短信-1"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">发送短信</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SDK2-0"><span class="nav-number">3.3.2.</span> <span class="nav-text">SDK2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装-1"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#必要参数"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">必要参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#指定模板-ID-单发短信"><span class="nav-number">3.3.2.3.</span> <span class="nav-text">指定模板 ID 单发短信</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是腾讯云短信"><span class="nav-number">1.</span> <span class="nav-text">为什么是腾讯云短信?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册腾讯云"><span class="nav-number">2.</span> <span class="nav-text">注册腾讯云</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开通云短信"><span class="nav-number">3.</span> <span class="nav-text">开通云短信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建应用"><span class="nav-number">4.</span> <span class="nav-text">创建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速入门"><span class="nav-number">5.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#签名"><span class="nav-number">5.1.</span> <span class="nav-text">签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文模板"><span class="nav-number">5.2.</span> <span class="nav-text">正文模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送短信"><span class="nav-number">5.3.</span> <span class="nav-text">发送短信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDK3-0"><span class="nav-number">5.3.1.</span> <span class="nav-text">SDK3.0</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装"><span class="nav-number">5.3.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#发送短信-1"><span class="nav-number">5.3.1.2.</span> <span class="nav-text">发送短信</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SDK2-0"><span class="nav-number">5.3.2.</span> <span class="nav-text">SDK2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装-1"><span class="nav-number">5.3.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#必要参数"><span class="nav-number">5.3.2.2.</span> <span class="nav-text">必要参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#指定模板-ID-单发短信"><span class="nav-number">5.3.2.3.</span> <span class="nav-text">指定模板 ID 单发短信</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

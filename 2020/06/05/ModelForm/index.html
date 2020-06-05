@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tigercoll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="你是不是有这样的情况,有一个很多的form表单需要提交.如: 123456789101112&lt;form action&#x3D;&quot;&#x2F;login&#x2F;&quot; ,method&#x3D;&#39;post&#39;&gt;    &lt;div&gt;用户名:&lt;input type&#x3D;&quot;text&quot;&gt; &lt;&#x2F;div&gt;    &lt;div&gt;密码:&lt;input type&#x3D;&quot;text&quot;&gt; &lt;&#x2F;div&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ModelForm">
+<meta property="og:url" content="https://tigercoll.github.io/2020/06/05/ModelForm/index.html">
+<meta property="og:site_name" content="Tigercoll&#39;s blog">
+<meta property="og:description" content="你是不是有这样的情况,有一个很多的form表单需要提交.如: 123456789101112&lt;form action&#x3D;&quot;&#x2F;login&#x2F;&quot; ,method&#x3D;&#39;post&#39;&gt;    &lt;div&gt;用户名:&lt;input type&#x3D;&quot;text&quot;&gt; &lt;&#x2F;div&gt;    &lt;div&gt;密码:&lt;input type&#x3D;&quot;text&quot;&gt; &lt;&#x2F;div&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tigercoll.github.io/images/ModelForm/image-20200605122924107.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/ModelForm/image-20200605124731828.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/ModelForm/image-20200605130659788.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/ModelForm/image-20200605132741123.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/ModelForm/image-20200605133538323.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/ModelForm/image-20200605134718256.png">
+<meta property="article:published_time" content="2020-06-05T02:47:53.600Z">
+<meta property="article:modified_time" content="2020-06-05T14:28:57.990Z">
+<meta property="article:author" content="Tigercoll">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="django">
+<meta property="article:tag" content="ModelForm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tigercoll.github.io/images/ModelForm/image-20200605122924107.png">
+
+<link rel="canonical" href="https://tigercoll.github.io/2020/06/05/ModelForm/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ModelForm | Tigercoll's blog</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a96c4a898a5cb3af691471bb9804141d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+	
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tigercoll's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/Tigercoll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tigercoll.github.io/2020/06/05/ModelForm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/p1.jpg">
+      <meta itemprop="name" content="Tigercoll">
+      <meta itemprop="description" content="万丈高楼平地起,勿在浮沙筑高台">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tigercoll's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ModelForm
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-05 10:47:53 / 修改时间：22:28:57" itemprop="dateCreated datePublished" datetime="2020-06-05T10:47:53+08:00">2020-06-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/django/" itemprop="url" rel="index"><span itemprop="name">django</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>你是不是有这样的情况,有一个很多的form表单需要提交.如:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/login/"</span> ,<span class="attr">method</span>=<span class="string">'post'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>用户名:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>密码:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>性别:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>爱好: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>年龄: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>手机号: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>邮箱: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>QQ: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>等等: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> ,<span class="attr">value</span>=<span class="string">'提交'</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>你的后台就需要一个一个对表单进行验证,我们有没有简便的方法生成这些表单,然后对其进行验证呢?</p>
+<p><code>django</code>的<code>ModelForm</code>就帮助我们做了这个事情.</p>
+<a id="more"></a>
+
+<h2 id="简单实例"><a href="#简单实例" class="headerlink" title="简单实例"></a>简单实例</h2><p>新建一个<code>app01</code></p>
+<p>我们先在<code>model.py</code>中添加<code>UserInfo</code>类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    username = models.CharField(verbose_name=<span class="string">'用户名'</span>,max_length=<span class="number">32</span>)</span><br><span class="line">    password = models.CharField(verbose_name=<span class="string">'密码'</span>,max_length=<span class="number">32</span>)</span><br><span class="line">    mobile_phone = models.CharField(verbose_name=<span class="string">'手机号'</span>,max_length=<span class="number">32</span>)</span><br><span class="line">    email = models.EmailField(verbose_name=<span class="string">'邮箱'</span>,max_length=<span class="number">32</span>)</span><br></pre></td></tr></table></figure>
+
+<p>新建一个<code>forms.py</code>来存放我们的<code>ModelForm</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从models导入UserInfo</span></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> UserInfo</span><br><span class="line"><span class="comment"># 导入django的ModelForm</span></span><br><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="comment"># 定义一个ModelForm类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegisterForm</span><span class="params">(forms.ModelForm)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        <span class="comment"># 关联到models中的类</span></span><br><span class="line">        model = UserInfo</span><br><span class="line">        <span class="comment"># 取所有字段,当然也可以写成:fields=['username','password']</span></span><br><span class="line">        fields = <span class="string">'__all__'</span></span><br></pre></td></tr></table></figure>
+
+<p>在<code>views.py</code>中添加视图函数导入我们的<code>form</code>类,个人比较喜欢<code>cbv</code>模式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.views <span class="keyword">import</span> View</span><br><span class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> RegisterForm</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegistView</span><span class="params">(View)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self,request)</span>:</span></span><br><span class="line">        forms =RegisterForm()</span><br><span class="line">        <span class="keyword">return</span> render(request,<span class="string">'register.html'</span>,locals())</span><br></pre></td></tr></table></figure>
+
+<p>在<code>tamplates</code>下新建<code>register.html</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">&#123;% for field in forms  %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"&#123;&#123; field.id_for_label &#125;&#125;"</span>&gt;</span>&#123;&#123; field.label &#125;&#125;:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    &#123;&#123; field &#125;&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>urls.py</code>中添加路由</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^register/'</span>,views.RegistView.as_view()),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>这样基本上一个简单的<code>ModelForm</code>示例就基本完成了,我们运行起来看一下效果:</p>
+<p><img src="/images/ModelForm/image-20200605122924107.png" alt=""></p>
+<p>可以看到我们这里的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">field.label就是verbose_name,</span><br><span class="line">field 他会帮我们生产一个input框</span><br><span class="line">我们按F12查看元素,会发现,field帮我们生产了这样一个东西</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">maxlength</span>=<span class="string">"32"</span> <span class="attr">required</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"id_username"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义字段"><a href="#自定义字段" class="headerlink" title="自定义字段"></a>自定义字段</h3><p>那么如果我们想自定义展示的字段我们该怎么办呢?没关系,<code>ModelForm</code>也为我们想到了.我们可以这样:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从models导入UserInfo</span></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> UserInfo</span><br><span class="line"><span class="comment"># 导入django的ModelForm</span></span><br><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="comment"># 导入正则匹配类</span></span><br><span class="line"><span class="keyword">from</span> django.core.validators <span class="keyword">import</span> RegexValidator</span><br><span class="line"><span class="comment"># 定义一个ModelForm类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegisterForm</span><span class="params">(forms.ModelForm)</span>:</span></span><br><span class="line">    <span class="comment"># 重写手机号,添加自定义校验</span></span><br><span class="line">    mobile_phone = forms.CharField(label=<span class="string">'手机号'</span>,validators=[RegexValidator(<span class="string">r'^(1[3|4|5|6|7|8|9])\d&#123;9&#125;$'</span>,<span class="string">'手机格式不正确'</span>),])</span><br><span class="line">    <span class="comment"># 修改密码展示</span></span><br><span class="line">    password = forms.CharField(widget=forms.PasswordInput,label=<span class="string">'密码'</span>)</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        <span class="comment"># 关联到models中的类</span></span><br><span class="line">        model = UserInfo</span><br><span class="line">        <span class="comment"># 取所有字段,当然也可以写成:fields=['username','password']</span></span><br><span class="line">        fields = <span class="string">'__all__'</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>再来看我们的密码就变成密码框了.</p>
+<p><img src="/images/ModelForm/image-20200605124731828.png" alt=""></p>
+<h3 id="新增没有的字段"><a href="#新增没有的字段" class="headerlink" title="新增没有的字段"></a>新增没有的字段</h3><p>我们在注册的时候肯定会让我们确认密码是否一致.所以我们需要再生成一个确认密码的字段,我们也可以在<code>ModelForm</code>中新增</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    <span class="comment"># 修改密码展示</span></span><br><span class="line">    password = forms.CharField(widget=forms.PasswordInput,label=<span class="string">'密码'</span>)</span><br><span class="line">    <span class="comment"># ModelForm 会去检测UserInfo中有没有同名 的字段,如果没有的话,会帮我们新增</span></span><br><span class="line">    re_password = forms.CharField(widget=forms.PasswordInput,label=<span class="string">'确认密码'</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>看效果:</p>
+<p><img src="/images/ModelForm/image-20200605130659788.png" alt=""></p>
+<p>有确实是有了,但是这确认密码怎么在最后啊?</p>
+<p>原来<code>ModelForm</code>是按照<code>model</code>表中的顺序来排序的,那么我们怎么样才能更改顺序呢?</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    <span class="comment"># 修改密码展示</span></span><br><span class="line">    password = forms.CharField(widget=forms.PasswordInput,label=<span class="string">'密码'</span>)</span><br><span class="line">    <span class="comment"># ModelForm 会去检测UserInfo中有没有同名 的字段,如果没有的话,会帮我们新增</span></span><br><span class="line">    re_password = forms.CharField(widget=forms.PasswordInput,label=<span class="string">'确认密码'</span>)</span><br><span class="line">    <span class="comment"># 只需要加一个这个字段</span></span><br><span class="line">   	field_order = [<span class="string">'username'</span>, <span class="string">'password'</span>, <span class="string">'re_password'</span>,<span class="string">'email'</span>,<span class="string">'mobile_phone'</span>]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="渲染前端样式"><a href="#渲染前端样式" class="headerlink" title="渲染前端样式"></a>渲染前端样式</h3><p>虽然我们已经在前台展示了出来,但是确认有点让人不忍直视,所以我们接下来给他点颜色看看</p>
+<p>引入<code>bootstrap</code>中的<code>form</code>表单</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.register</span>&#123;</span></span><br><span class="line">            width: 600px;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"register"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"form-horizontal"</span>&gt;</span></span><br><span class="line">        &#123;% for field in forms  %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"&#123;&#123; field.id_for_label &#125;&#125;"</span> <span class="attr">class</span>=<span class="string">"col-sm-2 control-label"</span>&gt;</span>&#123;&#123; field.label &#125;&#125;:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-10"</span>&gt;</span></span><br><span class="line">&#123;#      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"inputEmail3"</span> <span class="attr">placeholder</span>=<span class="string">"Email"</span>&gt;</span>#&#125;</span><br><span class="line">           &#123;&#123; field &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-offset-2 col-sm-10"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-default"</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看一下效果:</p>
+<p><img src="/images/ModelForm/image-20200605132741123.png" alt=""></p>
+<p>虽然像那么点样子了,但是总感觉差一点.</p>
+<p>区别就在于别人有<code>class=&quot;form-control&quot;</code>样式而我们没有,所以我们在后端给他加上</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;#      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"inputEmail3"</span> <span class="attr">placeholder</span>=<span class="string">"Email"</span>&gt;</span>#&#125;</span><br><span class="line">         <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"mobile_phone"</span> <span class="attr">required</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"id_mobile_phone"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改<code>froms</code>中的<code>RegisterForm</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">     <span class="comment"># 重写手机号,添加自定义校验</span></span><br><span class="line">  mobile_phone = forms.CharField(label=<span class="string">'手机号'</span>,validators=[RegexValidator(<span class="string">r'^(1[3|4|5|6|7|8|9])\d&#123;9&#125;$'</span>,<span class="string">'手机格式不正确'</span>),]</span><br><span class="line">                                 widget=forms.TextInput(attrs=&#123;<span class="string">'class'</span>:<span class="string">'form-control'</span>,<span class="string">'placeholder'</span>:<span class="string">'请输入手机号'</span>&#125;))</span><br><span class="line">  <span class="comment"># 修改密码展示</span></span><br><span class="line">  password = forms.CharField(widget=forms.PasswordInput,label=<span class="string">'密码'</span>)</span><br><span class="line">  <span class="comment"># ModelForm 会去检测UserInfo中有没有同名 的字段,如果没有的话,会帮我们新增</span></span><br><span class="line">  re_password = forms.CharField(widget=forms.PasswordInput(attrs=&#123;<span class="string">'class'</span>:<span class="string">'form-control'</span>,<span class="string">'placeholder'</span>:<span class="string">'请输入确认密码'</span>&#125;),label=<span class="string">'确认密码'</span>)</span><br><span class="line">  field_order = [<span class="string">'username'</span>, <span class="string">'password'</span>, <span class="string">'re_password'</span>,<span class="string">'email'</span>,<span class="string">'mobile_phone'</span>]</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+
+<p>其实每个字段都是一个<code>input</code>框,所以我们只要在<code>widget</code>中添加<code>attrs={&#39;class&#39;:&#39;form-control&#39;,&#39;placeholder&#39;:&#39;请输入确认密码&#39;}</code>即可</p>
+<p><img src="/images/ModelForm/image-20200605133538323.png" alt=""></p>
+<p>但是这样一个一个添加也麻烦了,有没有简单点的办法,答案肯定是有的.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">   <span class="comment"># 重写__ini__方法,继承父类,改写自身的__init__方法</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,*args,**kwargs)</span>:</span></span><br><span class="line">       super().__init__(*args,**kwargs)</span><br><span class="line">       <span class="keyword">for</span> name,field <span class="keyword">in</span> self.fields.items():</span><br><span class="line">           <span class="comment"># 为每个字段添加样式</span></span><br><span class="line">           field.widget.attrs[<span class="string">'class'</span>] = <span class="string">'form-control'</span></span><br><span class="line">           <span class="comment"># 为每个字段添加placeholder</span></span><br><span class="line">           field.widget.attrs[<span class="string">'placeholder'</span>] = <span class="string">'请输入&#123;&#125;'</span>.format(field.label)</span><br></pre></td></tr></table></figure>
+
+<p>这样我就不需要在其他地方多写了,可以把之前加的统统去掉</p>
+<p>查看效果:</p>
+<p><img src="/images/ModelForm/image-20200605134718256.png" alt=""></p>
+<p>虽然看上去没什么大的变化但是,我们确实在后端添加了样式,因为这只是演示.所以并不是很好,不要在意这些细节</p>
+<h3 id="校验字段"><a href="#校验字段" class="headerlink" title="校验字段"></a>校验字段</h3><p>我们通过<code>ajax</code>获取所有的表单数据,通过<code>post</code>请求传递给后台</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerFunc</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    		<span class="comment">//通过这个可以获取所有的表单数据</span></span><br><span class="line">            <span class="keyword">var</span> formDate = $(<span class="string">'#regForm'</span>).serialize();</span><br><span class="line">            <span class="built_in">console</span>.log(formDate);</span><br><span class="line">          $.ajax(&#123;</span><br><span class="line">              url:<span class="string">'/register/'</span>,</span><br><span class="line">              type:<span class="string">'POST'</span>,</span><br><span class="line">              data: formDate,</span><br><span class="line">              dataType:<span class="string">'json'</span>,</span><br><span class="line">              success:<span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(callback)</span><br><span class="line">              &#125;</span><br><span class="line">              &#125;)</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>后台只需要把<code>reques.POST</code>传给<code>ModelForm</code>即可:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self,request)</span>:</span></span><br><span class="line">    print(request.POST)</span><br><span class="line">    forms = account.RegisterForm(data=request.POST)</span><br><span class="line">    <span class="keyword">if</span> forms.is_valid():</span><br><span class="line">        <span class="comment"># 通过直接保存</span></span><br><span class="line">        froms.save()</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">'ok'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后我们就需要自己定义钩子函数,为每个字段做校验规则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.core.exceptions <span class="keyword">import</span> ValidationError</span><br><span class="line"><span class="comment"># 当然之前写的也是会生效的</span></span><br><span class="line"> mobile_phone = forms.CharField(label=<span class="string">'手机号'</span>,validators=[RegexValidator(<span class="string">r'^(1[3|4|5|6|7|8|9])\d&#123;9&#125;$'</span>,<span class="string">'手机格式不正确'</span>),])</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_username</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="comment"># 钩子函数 一下为校验内容</span></span><br><span class="line">    username = self.cleaned_data[<span class="string">'username'</span>]</span><br><span class="line">    exists = UserInfo.objects.filter(username=username).exists()</span><br><span class="line">    <span class="keyword">if</span> exists:</span><br><span class="line">        self.add_error</span><br><span class="line">    <span class="keyword">return</span> username</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_re_password</span><span class="params">(self)</span>:</span></span><br><span class="line">    password = self.cleaned_data[<span class="string">'password'</span>]</span><br><span class="line">    re_password = self.cleaned_data[<span class="string">'re_password'</span>]</span><br><span class="line">    <span class="keyword">if</span> password!=re_password:</span><br><span class="line">        <span class="keyword">raise</span> ValidationError(<span class="string">'两次密码不一致'</span>)</span><br><span class="line">    <span class="keyword">return</span> re_password</span><br></pre></td></tr></table></figure>
+
+<p><code>ModelForm</code>的基本使用就讲到这里.至于前端的展示什么的,这里就不过多的展开了.</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>万丈高楼平地起,勿在浮沙筑高台</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Tigercoll 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+              <a href="/tags/django/" rel="tag"><i class="fa fa-tag"></i> django</a>
+              <a href="/tags/ModelForm/" rel="tag"><i class="fa fa-tag"></i> ModelForm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/04/Dockerfile/" rel="prev" title="Dockerfile">
+      <i class="fa fa-chevron-left"></i> Dockerfile
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDY4NC8xMTIyMQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单实例"><span class="nav-number">1.</span> <span class="nav-text">简单实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义字段"><span class="nav-number">1.1.</span> <span class="nav-text">自定义字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增没有的字段"><span class="nav-number">1.2.</span> <span class="nav-text">新增没有的字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染前端样式"><span class="nav-number">1.3.</span> <span class="nav-text">渲染前端样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#校验字段"><span class="nav-number">1.4.</span> <span class="nav-text">校验字段</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tigercoll"
+      src="/images/p1.jpg">
+  <p class="site-author-name" itemprop="name">Tigercoll</p>
+  <div class="site-description" itemprop="description">万丈高楼平地起,勿在浮沙筑高台</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Tigercoll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tigercoll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tigercoll</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

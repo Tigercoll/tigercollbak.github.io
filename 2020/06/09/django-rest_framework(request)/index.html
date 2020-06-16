@@ -22,7 +22,7 @@
 
   <meta name="description" content="上次我们大致走了一遍drf的整个生命周期,以及restfulAPI的快速实现,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="django rest_framework源码解析">
+<meta property="og:title" content="django rest_framework源码解析(解析模块,认证,权限,频率控制,版本控制)">
 <meta property="og:url" content="https://tigercoll.github.io/2020/06/09/django-rest_framework(request)/index.html">
 <meta property="og:site_name" content="Tigercoll&#39;s blog">
 <meta property="og:description" content="上次我们大致走了一遍drf的整个生命周期,以及restfulAPI的快速实现,">
@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://tigercoll.github.io/images/django-rest_framework(request)/image-20200614172539838.png">
 <meta property="og:image" content="https://tigercoll.github.io/images/django-rest_framework(request)/image-20200614172949047.png">
 <meta property="article:published_time" content="2020-06-09T12:51:08.606Z">
-<meta property="article:modified_time" content="2020-06-14T12:00:13.933Z">
+<meta property="article:modified_time" content="2020-06-15T12:02:01.100Z">
 <meta property="article:author" content="Tigercoll">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="django">
@@ -63,7 +63,7 @@
   };
 </script>
 
-  <title>django rest_framework源码解析 | Tigercoll's blog</title>
+  <title>django rest_framework源码解析(解析模块,认证,权限,频率控制,版本控制) | Tigercoll's blog</title>
   
 
 
@@ -205,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          django rest_framework源码解析
+          django rest_framework源码解析(解析模块,认证,权限,频率控制,版本控制)
         </h1>
 
         <div class="post-meta">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-14 20:00:13" itemprop="dateModified" datetime="2020-06-14T20:00:13+08:00">2020-06-14</time>
+                <time title="修改时间：2020-06-15 20:02:01" itemprop="dateModified" datetime="2020-06-15T20:02:01+08:00">2020-06-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -445,7 +445,10 @@
     <a href="/2020/06/07/python%E6%93%8D%E4%BD%9Credis/" rel="prev" title="python操作redis">
       <i class="fa fa-chevron-left"></i> python操作redis
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/15/django-rest_framework%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90(%E5%BA%8F%E5%88%97%E5%8C%96%E5%99%A8,%E5%88%86%E9%A1%B5,%E8%B7%AF%E7%94%B1,%E6%B8%B2%E6%9F%93%E5%99%A8)/" rel="next" title="django rest_framework源码解析(序列化器,分页,路由,渲染器)">
+      django rest_framework源码解析(序列化器,分页,路由,渲染器) <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -525,7 +528,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

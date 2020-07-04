@@ -1774,7 +1774,10 @@
 <li><p>打算去了解一下底层 <code>select,poll,epoll</code></p>
 </li>
 </ul>
-<h2 id="2020-7-5"><a href="#2020-7-5" class="headerlink" title="2020.7.5"></a>2020.7.5</h2><p>python编程的技巧</p>
+<h2 id="2020-7-5"><a href="#2020-7-5" class="headerlink" title="2020.7.5"></a>2020.7.5</h2><ul>
+<li>分享了一些python编程的技巧:<a href="https://tigercoll.github.io/2020/07/03/Python%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/">查看博客</a></li>
+<li><code>python3-cookbook</code>还是有很多值得学习的地方:地址(<a href="https://python3-cookbook.readthedocs.io/zh_CN/latest/preface.html" target="_blank" rel="noopener">https://python3-cookbook.readthedocs.io/zh_CN/latest/preface.html</a>) 推荐有时间的童鞋可以再去过一遍</li>
+</ul>
 ]]></content>
       <categories>
         <category>summary</category>

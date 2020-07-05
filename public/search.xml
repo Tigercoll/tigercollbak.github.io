@@ -2392,20 +2392,20 @@
 
 <p>定义了以下函数：</p>
 <ul>
-<li><p><code>bisect.</code>bisect_left`(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
+<li><p><code>bisect</code>.<code>bisect_left</code>(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
 <p>在 <em>a</em> 中找到 <em>x</em> 合适的插入点以维持有序。参数 <em>lo</em> 和 <em>hi</em> 可以被用于确定需要考虑的子集；默认情况下整个列表都会被使用。如果 <em>x</em> 已经在 <em>a</em> 里存在，那么插入点会在已存在元素之前（也就是左边）。如果 <em>a</em> 是列表（list）的话，返回值是可以被放在 <code>list.insert()</code> 的第一个参数的。返回的插入点 <em>i</em> 可以将数组 <em>a</em> 分成两部分。左侧是 <code>all(val &lt; x for val in a[lo:i])</code> ，右侧是 <code>all(val &gt;= x for val in a[i:hi])</code> 。</p>
 </li>
-<li><p><code>bisect.</code>bisect_right`(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
+<li><p><code>bisect</code>.<code>bisect_right</code>(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
 </li>
-<li><p><code>bisect.</code>bisect`(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
+<li><p><code>bisect</code>.<code>bisect</code>(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
 <p>类似于 <a href="https://docs.python.org/zh-cn/3.6/library/bisect.html#bisect.bisect_left" target="_blank" rel="noopener"><code>bisect_left()</code></a>，但是返回的插入点是 <em>a</em> 中已存在元素 <em>x</em> 的右侧。返回的插入点 <em>i</em> 可以将数组 <em>a</em> 分成两部分。左侧是 <code>all(val &lt;= x for val in a[lo:i])</code>，右侧是 <code>all(val &gt; x for val in a[i:hi])</code> for the right side。</p>
 </li>
-<li><p><code>bisect.</code>insort_left`(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
+<li><p><code>bisect</code>.<code>insort_left</code>(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
 <p>将 <em>x</em> 插入到一个有序序列 <em>a</em> 里，并维持其有序。如果 <em>a</em> 有序的话，这相当于 <code>a.insert(bisect.bisect_left(a, x, lo, hi), x)</code>。要注意搜索是 O(log n) 的，插入却是 O(n) 的。</p>
 </li>
-<li><p><code>bisect.</code>insort_right`(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
+<li><p><code>bisect</code>.<code>insort_right</code>(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
 </li>
-<li><p><code>bisect.</code>insort`(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
+<li><p><code>bisect</code>.<code>insort</code>(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
 <p>类似于 <a href="https://docs.python.org/zh-cn/3.6/library/bisect.html#bisect.insort_left" target="_blank" rel="noopener"><code>insort_left()</code></a>，但是把 <em>x</em> 插入到 <em>a</em> 中已存在元素 <em>x</em> 的右侧。</p>
 </li>
 </ul>

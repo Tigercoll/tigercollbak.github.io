@@ -199,110 +199,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://tigercoll.github.io/2020/07/09/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8%E5%AE%9E%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/p1.jpg">
-      <meta itemprop="name" content="Tigercoll">
-      <meta itemprop="description" content="万丈高楼平地起,勿在浮沙筑高台">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tigercoll's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/09/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8%E5%AE%9E%E4%BE%8B/" class="post-title-link" itemprop="url">音乐播放器实例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-07-09 19:14:16 / 修改时间：22:44:16" itemprop="dateCreated datePublished" datetime="2020-07-09T19:14:16+08:00">2020-07-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li>web app:web前端app</li>
-<li>native app :安卓,IOS app</li>
-<li>混合 app: 两个都有</li>
-</ul>
-<h2 id="像素理论"><a href="#像素理论" class="headerlink" title="像素理论"></a>像素理论</h2><h3 id="屏幕分辨率"><a href="#屏幕分辨率" class="headerlink" title="屏幕分辨率"></a>屏幕分辨率</h3><h4 id="物理像素"><a href="#物理像素" class="headerlink" title="物理像素"></a>物理像素</h4><p>也叫设备像素:</p>
-<p>买手机的时候回有一个<code>n X m</code>分辨率,那是屏幕的 <code>n X m</code>个呈像的点,一个点(小方格)为一个物理像素.它是屏幕能显示的最小粒度.设备像素也被称为物理像素,它是显示设备中一个最微小的物理部件.每个像素可以根据操作系统设置自己的颜色和亮度.任何设备的物理像素的数量都是固定的,任务一款设备上的1物理像素大小是不会变得,不同设备上的1物流像素大小可能是不一样的</p>
-<h4 id="CSS像素"><a href="#CSS像素" class="headerlink" title="CSS像素"></a>CSS像素</h4><p>CSS像素是一个抽象的单位,主要使用在浏览器上,用来精确的度量(确定)Web页面上的内容.它是为web开发者创造的,在CSS或者JavaScript中使用的一个抽象层,一般情况下,css像素被称为与设备无关的像素(device-independent像素),简称为”DIPs”.在一个标准的显示密度下,一个CSS 像素对应一个设备像素.</p>
-<h4 id="物理像素与CSS像素的关系"><a href="#物理像素与CSS像素的关系" class="headerlink" title="物理像素与CSS像素的关系"></a>物理像素与CSS像素的关系</h4><p>一个人width为200px的元素,它占据了200个css像素,单200个css像素占据多少个物理像素取决于屏幕的特性(是否高密度,即像素比)和用户的缩放行为.</p>
-<h2 id="移动端视口"><a href="#移动端视口" class="headerlink" title="移动端视口"></a>移动端视口</h2><ol>
-<li>在桌面浏览器中,最干净的那个视口就是约束你的CSS布局的视口,它决定了用户能看到什么</li>
-<li>在移动设备上,视口被分为了两个:布局视口限制了你的CSS布局,视觉视口会决定用户能看到什么</li>
-<li>在移动设备上,还有一个理想视口,它是对于特定设备上特定浏览器的布局视口的一个理想尺寸</li>
-<li>可以把布局视口的尺寸设置为理想视口,本质上,这就是移动端设计的基础</li>
-</ol>
-<h3 id="视口标签"><a href="#视口标签" class="headerlink" title="视口标签"></a>视口标签</h3><h4 id="meta视口标签"><a href="#meta视口标签" class="headerlink" title="meta视口标签"></a>meta视口标签</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tigercoll.github.io/2020/07/06/%E4%BA%A4%E6%8D%A2%E6%9C%BAACL%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1002,10 +898,93 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tigercoll.github.io/2020/06/07/python%E6%93%8D%E4%BD%9Credis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/p1.jpg">
+      <meta itemprop="name" content="Tigercoll">
+      <meta itemprop="description" content="万丈高楼平地起,勿在浮沙筑高台">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tigercoll's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/07/python%E6%93%8D%E4%BD%9Credis/" class="post-title-link" itemprop="url">python操作redis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-07 21:31:58" itemprop="dateCreated datePublished" datetime="2020-06-07T21:31:58+08:00">2020-06-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-08 20:52:58" itemprop="dateModified" datetime="2020-06-08T20:52:58+08:00">2020-06-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。</p>
+<p>Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。</p>
+<p>它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/07/python%E6%93%8D%E4%BD%9Credis/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1073,20 +1052,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

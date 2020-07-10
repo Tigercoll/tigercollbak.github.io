@@ -2555,4 +2555,87 @@
         <tag>vue-cli脚手架</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Vuex</title>
+    <url>/2020/07/10/vuex/</url>
+    <content><![CDATA[<h3 id="什么是Vuex"><a href="#什么是Vuex" class="headerlink" title="什么是Vuex?"></a>什么是Vuex?</h3><p>Vuex 是实现组件全局状态(数据)管理的一种机制,可以方便的实现组件之间的数据共享.</p>
+<img src="/images/vuex/image-20200710180830043.png" alt="image-20200710180830043"  width="100%"/>
+
+<p>如何没有vuex,我们大范围的传值的时候会十分麻烦,而有了vuex 我们只需要跟store相互就可以了</p>
+<p><font color="red">当然我们也不是所有的数据都需要放到vuex中,有一些组件私有的数据,我们没有必要把他放到vuex中,只有组件之间共享的数据,才有必要放到vuex中.</font></p>
+<h3 id="使用vuex统一管理状态的优点"><a href="#使用vuex统一管理状态的优点" class="headerlink" title="使用vuex统一管理状态的优点:"></a>使用vuex统一管理状态的优点:</h3><ol>
+<li>能够在vuex中几种管理共享的数据,易于开发和维护.</li>
+<li>能够高效的实现组件之间的数据共享,提供开发效率.</li>
+<li>存储在vuex中的数据都是响应式的,能够实时保持数据与页面的同步</li>
+</ol>
+<a id="more"></a>
+
+<h3 id="Vuex的基本使用"><a href="#Vuex的基本使用" class="headerlink" title="Vuex的基本使用"></a>Vuex的基本使用</h3><h4 id="安装vuex依赖包"><a href="#安装vuex依赖包" class="headerlink" title="安装vuex依赖包"></a>安装vuex依赖包</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install vuex --save</span><br><span class="line"><span class="meta">#</span><span class="bash"> 当然你也可以用 cnpm</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="导入vuex包"><a href="#导入vuex包" class="headerlink" title="导入vuex包"></a>导入vuex包</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">"vuex"</span>;</span><br><span class="line"><span class="comment">//将vuex放入vue中</span></span><br><span class="line">Vue.use(Vuex);</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建store对象"><a href="#创建store对象" class="headerlink" title="创建store对象"></a>创建store对象</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;&#125;,</span><br><span class="line">  mutations: &#123;&#125;,</span><br><span class="line">  actions: &#123;&#125;,</span><br><span class="line">  modules: &#123;&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="将store对象挂载到vue实例中"><a href="#将store对象挂载到vue实例中" class="headerlink" title="将store对象挂载到vue实例中"></a>将store对象挂载到vue实例中</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">"./App.vue"</span>;</span><br><span class="line"><span class="comment">// 导入store组件中的store实例对象</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">"./store"</span>;</span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  <span class="comment">//将创建的共享数据对象,挂载到vue实例中</span></span><br><span class="line">  <span class="comment">//所有组件都可以从store中获取数据</span></span><br><span class="line">  store,</span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;).$mount(<span class="string">"#app"</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="vuex的核心概念"><a href="#vuex的核心概念" class="headerlink" title="vuex的核心概念"></a>vuex的核心概念</h3><h4 id="State"><a href="#State" class="headerlink" title="State"></a>State</h4><p>提供唯一的公共数据源,所有的共享数据都统一放到Store的state中进行存储</p>
+<h5 id="声明数据"><a href="#声明数据" class="headerlink" title="声明数据"></a>声明数据</h5><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<h5 id="组件访问state中的数据"><a href="#组件访问state中的数据" class="headerlink" title="组件访问state中的数据"></a>组件访问state中的数据</h5><p>第一种方式:this.$store.state.全局数据名称  </p>
+<p>第二种方式:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//从vuex中按需导入mapState 函数</span></span><br><span class="line"><span class="keyword">import</span> &#123;mapState&#125; <span class="keyword">from</span>  <span class="string">'vuex'</span></span><br><span class="line"><span class="comment">//通过刚才导入的mapState函数,将当前组件需要的全局数据,映射为当前组件的computed计算属性</span></span><br><span class="line">computed:&#123;</span><br><span class="line">    <span class="comment">//通过展开运算符映射成计算属性</span></span><br><span class="line">    ...mapState([<span class="string">'count'</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Moutation"><a href="#Moutation" class="headerlink" title="Moutation"></a>Moutation</h4><p>用于变更Store中的数据.<font color="red">    不能写异步的代码!!!</font></p>
+<ol>
+<li>只能通过mutation变更Store数据,不可以直接操作Store中的数据</li>
+<li>通过这种方式虽然操作起来比较繁琐,但是可以集中监控所有数据的变化</li>
+</ol>
+<p>第一种调用方式</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//定义mutations</span></span><br><span class="line">    mutations: &#123;</span><br><span class="line">        add(state) &#123;</span><br><span class="line">            <span class="comment">//变更状态</span></span><br><span class="line">            state.count += <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"><span class="comment">//在相应的组件中调用</span></span><br><span class="line"> methods: &#123;</span><br><span class="line">    addCount() &#123;</span><br><span class="line">        <span class="comment">//通过commit触发</span></span><br><span class="line">      <span class="keyword">this</span>.$store.commit(<span class="string">'add'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>添加参数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//定义mutations</span></span><br><span class="line">    mutations: &#123;</span><br><span class="line">        addN(state,step) &#123;</span><br><span class="line">            <span class="comment">//变更状态</span></span><br><span class="line">            state.count += step</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"><span class="comment">//在相应的组件中调用</span></span><br><span class="line"> methods: &#123;</span><br><span class="line">    addCount() &#123;</span><br><span class="line">        <span class="comment">//通过commit触发</span></span><br><span class="line">      <span class="keyword">this</span>.$store.commit(<span class="string">'add'</span>,<span class="keyword">this</span>.step)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种调用方式</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">    <span class="comment">//定义mutations</span></span><br><span class="line">    mutations: &#123;</span><br><span class="line">        add(state) &#123;</span><br><span class="line">            <span class="comment">//变更状态</span></span><br><span class="line">            state.count += <span class="number">1</span></span><br><span class="line">        &#125;,</span><br><span class="line">        addN(state, step) &#123;</span><br><span class="line">            state.count += step</span><br><span class="line">        &#125;,</span><br><span class="line">        sub(state) &#123;</span><br><span class="line">            state.count -= <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">        </span><br><span class="line"> <span class="comment">//在相应的组件中导入mapMutations</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapMutations &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"><span class="comment">//在methods中通过...映射为当前组件的methods方法</span></span><br><span class="line">methods: &#123;</span><br><span class="line">    ...mapMutations([<span class="string">'sub'</span>])</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//有参数的话 可以再定义一个函数,来调用this.subN(参数)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><p>我们刚才说过Mutation中不能执行异步操作,那么我们如果要用异步操作怎么办?这时候就需要用到action了</p>
+<p>第一种方式:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义action</span></span><br><span class="line">    actions: &#123;</span><br><span class="line">        addAsync(context) &#123;</span><br><span class="line">            setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="comment">//不能直接修改state中的数据,必须通过Mutation中的函数</span></span><br><span class="line">                context.commit(<span class="string">'add'</span>)</span><br><span class="line">            &#125;, <span class="number">1000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">        </span><br><span class="line"><span class="comment">//在相应组件中使用与Mutation类似,通过this.$store.dispatch</span></span><br><span class="line">  addAsync() &#123;</span><br><span class="line">      <span class="keyword">this</span>.$store.dispatch(<span class="string">'addAsync'</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种方式:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">subAsync(context) &#123;</span><br><span class="line">            setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                context.commit(<span class="string">'sub'</span>)</span><br><span class="line">            &#125;, <span class="number">1000</span>);</span><br><span class="line">        &#125;</span><br><span class="line"> <span class="comment">//在相应的组件中导入mapMutations</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapActions &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"><span class="comment">//在methods中通过...映射为当前组件的methods方法</span></span><br><span class="line">methods: &#123;</span><br><span class="line">    ...mapActions([<span class="string">'sub'</span>])</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h4><p>Getter 用于对Store 中的数据进行加工处理形成新的数据.</p>
+<ol>
+<li>Getter 可以对Store中已有数据加工处理之后形成新的数据,类似Vue的计算属性</li>
+<li>Store中数据发生变化,Getter的数据也跟着变化</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义Getter</span></span><br><span class="line">  getters: &#123;</span><br><span class="line">        showNum: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">`当前最新的数字:<span class="subst">$&#123;state.count&#125;</span>`</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"><span class="comment">//当然调用也有两种</span></span><br><span class="line"><span class="number">1.</span>使用<span class="keyword">this</span>.$store.getters.名称</span><br><span class="line"><span class="number">2.</span>导入 mapGetters </span><br><span class="line"><span class="keyword">import</span> &#123; mapGetters &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line">  computed: &#123;</span><br><span class="line">    ...mapGetters([<span class="string">'showNum'</span>])</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<h4 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h4><p>由于使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store 对象就有可能变得相当臃肿。</p>
+<p>为了解决以上问题，Vuex 允许我们将 store 分割成<strong>模块（module）</strong>。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> moduleA = &#123;</span><br><span class="line">  state: <span class="function"><span class="params">()</span> =&gt;</span> (&#123; ... &#125;),</span><br><span class="line">  mutations: &#123; ... &#125;,</span><br><span class="line">  actions: &#123; ... &#125;,</span><br><span class="line">  getters: &#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> moduleB = &#123;</span><br><span class="line">  state: <span class="function"><span class="params">()</span> =&gt;</span> (&#123; ... &#125;),</span><br><span class="line">  mutations: &#123; ... &#125;,</span><br><span class="line">  actions: &#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  modules: &#123;</span><br><span class="line">    a: moduleA,</span><br><span class="line">    b: moduleB</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">store.state.a <span class="comment">// -&gt; moduleA 的状态</span></span><br><span class="line">store.state.b <span class="comment">// -&gt; moduleB 的状态</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>Vuex 并不限制你的代码结构。但是，它规定了一些需要遵守的规则：</p>
+<ol>
+<li>应用层级的状态应该集中到单个 store 对象中。</li>
+<li>提交 <strong>mutation</strong> 是更改状态的唯一方法，并且这个过程是同步的。</li>
+<li>异步逻辑都应该封装到 <strong>action</strong> 里面。</li>
+</ol>
+<p>只要你遵守以上规则，如何组织代码随你便。如果你的 store 文件太大，只需将 action、mutation 和 getter 分割到单独的文件。</p>
+<p>对于大型应用，我们会希望把 Vuex 相关代码分割到模块中。下面是项目结构示例：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">├── index.html</span><br><span class="line">├── main.js</span><br><span class="line">├── api</span><br><span class="line">│   └── ... # 抽取出API请求</span><br><span class="line">├── components</span><br><span class="line">│   ├── App.vue</span><br><span class="line">│   └── ...</span><br><span class="line">└── store</span><br><span class="line">    ├── index.js          # 我们组装模块并导出 store 的地方</span><br><span class="line">    ├── actions.js        # 根级别的 action</span><br><span class="line">    ├── mutations.js      # 根级别的 mutation</span><br><span class="line">    └── modules</span><br><span class="line">        ├── cart.js       # 购物车模块</span><br><span class="line">        └── products.js   # 产品模块</span><br></pre></td></tr></table></figure>
+
+<p>参考官网文档:<a href="https://vuex.vuejs.org/zh/installation.html" target="_blank" rel="noopener">https://vuex.vuejs.org/zh/installation.html</a></p>
+]]></content>
+      <categories>
+        <category>Vuex</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>Vue</tag>
+        <tag>Vuex</tag>
+      </tags>
+  </entry>
 </search>

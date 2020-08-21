@@ -265,23 +265,15 @@
 
       
         <h3 id="日志的简单实用"><a href="#日志的简单实用" class="headerlink" title="日志的简单实用"></a>日志的简单实用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入logging模块</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.debug(<span class="string">'debug message'</span>)</span><br><span class="line">logging.info(<span class="string">'info message'</span>)</span><br><span class="line">logging.warning(<span class="string">'warning message'</span>)</span><br><span class="line">logging.error(<span class="string">'error message'</span>)</span><br><span class="line">logging.critical(<span class="string">'critical message'</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WARNING:root:warning message</span><br><span class="line">ERROR:root:error message</span><br><span class="line">CRITICAL:root:critical message</span><br></pre></td></tr></table></figure>
-
 <a id="more"></a>
-
 <p>默认情况下python的logging模块将日志打印到了标准输出中，且只显示了大于等于WARNING级别的日志，这说明默认的日志级别设置为WARNING（日志级别等级CRITICAL &gt; ERROR &gt; WARNING &gt; INFO &gt; DEBUG &gt; NOTSET），默认的日志格式为日志级别：Logger名称：用户输出消息。</p>
 <h3 id="灵活配置日志级别，日志格式，输出位置"><a href="#灵活配置日志级别，日志格式，输出位置" class="headerlink" title="灵活配置日志级别，日志格式，输出位置"></a>灵活配置日志级别，日志格式，输出位置</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.DEBUG,</span><br><span class="line">                    format=<span class="string">'%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'</span>,</span><br><span class="line">                    datefmt=<span class="string">'%Y-%m-%d %H:%M:%S'</span>,</span><br><span class="line">                    filename=<span class="string">'log.log'</span>)</span><br><span class="line"></span><br><span class="line">logging.debug(<span class="string">'debug message'</span>)</span><br><span class="line">logging.info(<span class="string">'info message'</span>)</span><br><span class="line">logging.warning(<span class="string">'warning message'</span>)</span><br><span class="line">logging.error(<span class="string">'error message'</span>)</span><br><span class="line">logging.critical(<span class="string">'critical message'</span>)</span><br></pre></td></tr></table></figure>
-
 <p>查看<code>log.log</code>文件:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2020-05-18 23:22:25 my_logging.py[line:8] DEBUG debug message</span><br><span class="line">2020-05-18 23:22:25 my_logging.py[line:9] INFO info message</span><br><span class="line">2020-05-18 23:22:25 my_logging.py[line:10] WARNING warning message</span><br><span class="line">2020-05-18 23:22:25 my_logging.py[line:11] ERROR error message</span><br><span class="line">2020-05-18 23:22:25 my_logging.py[line:12] CRITICAL critical message</span><br></pre></td></tr></table></figure>
-
 <p>可见在<code>logging.basicConfig()</code>函数中可通过具体参数来更改<code>logging</code></p>
 <h3 id="既往屏幕输入，也往文件写入log"><a href="#既往屏幕输入，也往文件写入log" class="headerlink" title="既往屏幕输入，也往文件写入log"></a><strong>既往屏幕输入，也往文件写入log</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">from</span> logging <span class="keyword">import</span> StreamHandler,FileHandler</span><br><span class="line"></span><br><span class="line">stream_hander  = StreamHandler()</span><br><span class="line">file_hander = FileHandler(<span class="string">'log.log'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">logging.basicConfig(level=logging.DEBUG,</span><br><span class="line">                    format=<span class="string">'%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'</span>,</span><br><span class="line">                    datefmt=<span class="string">'%Y-%m-%d %H:%M:%S'</span>,</span><br><span class="line">                   handlers=[stream_hander,file_hander])</span><br><span class="line"></span><br><span class="line">logging.debug(<span class="string">'debug message'</span>)</span><br><span class="line">logging.info(<span class="string">'info message'</span>)</span><br><span class="line">logging.warning(<span class="string">'warning message'</span>)</span><br><span class="line">logging.error(<span class="string">'error message'</span>)</span><br><span class="line">logging.critical(<span class="string">'critical message'</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <p>logging库采取了模块化的设计，提供了许多组件：记录器、处理器、过滤器和格式化器。</p>
 <ul>
 <li>Logger 暴露了应用程序代码能直接使用的接口。</li>
@@ -307,6 +299,7 @@
 <li><code>addFilter()</code>和<code>removeFilter()</code>分别配置和取消配置处理程序上的过滤器对象。</li>
 </ul>
 <h4 id="Formatters"><a href="#Formatters" class="headerlink" title="Formatters:"></a>Formatters:</h4><p>Formatter对象设置日志信息最后的规则、结构和内容，默认的时间格式为%Y-%m-%d %H:%M:%S，下面是Formatter常用的一些信息</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -314,7 +307,8 @@
 <th>Logger的名字</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>%(levelno)s</td>
 <td>数字形式的日志级别</td>
 </tr>
@@ -370,11 +364,12 @@
 <td>%(message)s</td>
 <td>用户输出的消息</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="Filter"><a href="#Filter" class="headerlink" title="Filter:"></a>Filter:</h4><p>过滤器（filter）用于接受或拒绝传递到记录器或处理器中的日志。虽然Python 3.2之后filter不一定非要用类来实现，但为了向下兼容，还是写一个包含filter()方法的类更好。</p>
 <p>filter()方法接收一个参数record，即一条日志记录。该方法返回0表示拒绝记录，返回非0则接受。需要注意的是，记录器的过滤器不会对其子记录器传递上来的日志进行过滤，而只对自身记录的日志进行过滤。</p>
 <h3 id="按日志不同等级保存日志到不同等级的文件中"><a href="#按日志不同等级保存日志到不同等级的文件中" class="headerlink" title="按日志不同等级保存日志到不同等级的文件中"></a>按日志不同等级保存日志到不同等级的文件中</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置logger对象</span></span><br><span class="line">logger = logging.getLogger(<span class="string">'日志模块'</span>)</span><br><span class="line"><span class="comment"># 设置最低的安全等级日志信息</span></span><br><span class="line">logger.setLevel(level=logging.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 控制台输出</span></span><br><span class="line"><span class="comment"># StreamHandler</span></span><br><span class="line">stream_handler = logging.StreamHandler()</span><br><span class="line">stream_handler.setLevel(level=logging.DEBUG)</span><br><span class="line">logger.addHandler(stream_handler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件输出</span></span><br><span class="line"><span class="comment"># FileHandler</span></span><br><span class="line"><span class="comment"># 设置日志文件名</span></span><br><span class="line">file_handler = logging.FileHandler(<span class="string">'log.log'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="comment"># 设置等级</span></span><br><span class="line">file_handler.setLevel(level=logging.INFO)</span><br><span class="line"><span class="comment"># 格式化</span></span><br><span class="line">formatter = logging.Formatter(<span class="string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)</span><br><span class="line"><span class="comment"># 设置过滤器</span></span><br><span class="line">info_filter = logging.Filter()</span><br><span class="line"><span class="comment"># 等级必须小于error</span></span><br><span class="line">info_filter.filter = <span class="keyword">lambda</span> record:record.levelno&lt;logging.ERROR</span><br><span class="line"><span class="comment"># 把过滤器放到handler</span></span><br><span class="line">file_handler.addFilter(info_filter)</span><br><span class="line">file_handler.setFormatter(formatter)</span><br><span class="line"><span class="comment"># 把handler加到logger</span></span><br><span class="line">logger.addHandler(file_handler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置错误日志存放文件</span></span><br><span class="line">error_handler = logging.FileHandler(<span class="string">'error.log'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">error_handler.setLevel(level=logging.ERROR)</span><br><span class="line">error_handler.setFormatter(formatter)</span><br><span class="line">logger.addHandler(error_handler)</span><br><span class="line"></span><br><span class="line">logger.info(<span class="string">'This is a log info'</span>)</span><br><span class="line">logger.debug(<span class="string">'Debugging'</span>)</span><br><span class="line">logger.warning(<span class="string">'Warning exists'</span>)</span><br><span class="line">logger.info(<span class="string">'Finish'</span>)</span><br><span class="line">logger.error(<span class="string">'Finish'</span>)</span><br><span class="line">logger.error(<span class="string">'error'</span>)</span><br></pre></td></tr></table></figure>
-
 <p>基本日常使用这样就够了</p>
 
     </div>
@@ -497,20 +492,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -621,6 +616,8 @@
 
 
 
+
+  
 
   
 

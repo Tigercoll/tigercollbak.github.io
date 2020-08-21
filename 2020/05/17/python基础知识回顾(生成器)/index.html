@@ -265,25 +265,19 @@
       
         <h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><p>通过列表生成式，我们可以直接创建一个列表。但是，受到内存限制，列表容量肯定是有限的。而且，创建一个包含100万个元素的列表，不仅占用很大的存储空间，如果我们仅仅需要访问前面几个元素，那后面绝大多数元素占用的空间都白白浪费了。</p>
 <a id="more"></a>
-
 <p>所以，如果列表元素可以按照某种算法推算出来，那我们是否可以在循环的过程中不断推算出后续的元素呢？这样就不必创建完整的list，从而节省大量的空间。在Python中，这种一边循环一边计算的机制，称为生成器：generator。</p>
 <p>要创建一个generator，有很多种方法。第一种方法很简单，只要把一个列表生成式的<code>[]</code>改成<code>()</code>，就创建了一个generator：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">l=[i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)]</span><br><span class="line">print(l)</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line">g  = (x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">19</span>))</span><br><span class="line">print(g)</span><br><span class="line"></span><br><span class="line">&lt;generator object &lt;genexpr&gt; at <span class="number">0x00D71FB0</span>&gt;</span><br></pre></td></tr></table></figure>
-
 <p>l是list 可以直接打印,而g是生成器,我们需要通过next来一个一个打印:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">print(next(g))</span><br><span class="line"><span class="number">0</span></span><br><span class="line">print(next(g))</span><br><span class="line"><span class="number">1</span></span><br><span class="line">...</span><br><span class="line">print(next(g))</span><br><span class="line"><span class="number">9</span></span><br><span class="line">print(next(g))</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">StopIteration</span><br><span class="line">当没有元素时,抛出异常</span><br></pre></td></tr></table></figure>
-
 <p>一般我们通过for循环,而不是使用next()调用</p>
 <h3 id="通过yield定义一个生成器"><a href="#通过yield定义一个生成器" class="headerlink" title="通过yield定义一个生成器"></a>通过yield定义一个生成器</h3><p>如果一个函数定义中包含<code>yield</code>关键字，那么这个函数就不再是一个普通函数，而是一个generator：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">yield</span>  <span class="number">1</span></span><br><span class="line">    print(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line">ret = func()</span><br><span class="line">print(next(ret))</span><br><span class="line">print(next(ret))</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
-
 <p>函数是顺序执行，遇到<code>return</code>语句或者最后一行函数语句就返回。而变成generator的函数，在每次调用<code>next()</code>的时候执行，遇到<code>yield</code>语句返回，再次执行时从上次返回的<code>yield</code>语句处继续执行。</p>
 <h3 id="yield-from"><a href="#yield-from" class="headerlink" title="yield from"></a>yield from</h3><p><code>yield from</code> 是在Python3.3才出现的语法。所以这个特性在Python2中是没有的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">yield</span>  <span class="number">1</span></span><br><span class="line">    print(<span class="number">2</span>)</span><br><span class="line">    l = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">    <span class="keyword">yield</span> l</span><br><span class="line">ret = func()</span><br><span class="line">print(next(ret))</span><br><span class="line">print(next(ret))</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br></pre></td></tr></table></figure>
-
 <p>使用 yield from 之后</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">yield</span>  <span class="number">1</span></span><br><span class="line">    print(<span class="number">2</span>)</span><br><span class="line">    l = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">    <span class="keyword">yield</span> <span class="keyword">from</span> l</span><br><span class="line">ret = func()</span><br><span class="line">print(next(ret))</span><br><span class="line">print(next(ret))</span><br><span class="line">print(next(ret))</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
-
 <p>可以看到  yield from 把一个可迭代对象变成了一个生成器</p>
 <p><code>yield from</code> 后面需要加的是可迭代对象，它可以是普通的可迭代对象，也可以是迭代器，甚至是生成器。</p>
 
@@ -406,20 +400,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -530,6 +524,8 @@
 
 
 
+
+  
 
   
 

@@ -271,16 +271,11 @@
 <p><code>#</code> 为 Dockerfile 中的注释。</p>
 <p>Docker 以从上到下的顺序运行 Dockerfile 的指令。为了指定基本映像，<strong>第一条指令必须是FROM</strong>。一个声明以<code>＃</code> 字符开头则被视为注释。可以在Docker文件中使用 <code>RUN</code>，<code>CMD</code>，<code>FROM</code>，<code>EXPOSE</code>，<code>ENV</code> 等指令。</p>
 <a id="more"></a>
-
 <h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h2><h3 id="FROM：指定基础镜像，必须为第一个命令"><a href="#FROM：指定基础镜像，必须为第一个命令" class="headerlink" title="FROM：指定基础镜像，必须为第一个命令"></a><code>FROM</code>：指定基础镜像，必须为第一个命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line">　　FROM &lt;image&gt;</span><br><span class="line">　　FROM &lt;image&gt;:&lt;tag&gt;</span><br><span class="line">　　FROM &lt;image&gt;@&lt;digest&gt;</span><br><span class="line">示例：</span><br><span class="line">　　FROM mysql:5.6</span><br><span class="line">注：</span><br><span class="line">tag 或 digest 是可选的，如果不使用这两个值时，会使用 latest 版本的基础镜像</span><br></pre></td></tr></table></figure>
-
 <h3 id="MAINTAINER：维护者信息"><a href="#MAINTAINER：维护者信息" class="headerlink" title="MAINTAINER：维护者信息"></a><code>MAINTAINER</code>：维护者信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line">    MAINTAINER &lt;name&gt;</span><br><span class="line">示例：</span><br><span class="line">    MAINTAINER tt</span><br><span class="line">    MAINTAINER tt@163.com</span><br><span class="line">    MAINTAINER tt &lt;tt@163.com&gt;</span><br></pre></td></tr></table></figure>
-
 <h3 id="RUN：构建镜像时执行的命令"><a href="#RUN：构建镜像时执行的命令" class="headerlink" title="RUN：构建镜像时执行的命令"></a><code>RUN</code>：构建镜像时执行的命令</h3><p><code>RUN</code> 用于在镜像容器中执行命令，其有以下两种命令执行方式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">shell执行</span><br><span class="line">	RUN &lt;command&gt;</span><br><span class="line">exec执行</span><br><span class="line">	RUN ["executable", "param1", "param2"]</span><br><span class="line">注：</span><br><span class="line">RUN 指令创建的中间镜像会被缓存，并会在下次构建中使用。如果不想使用这些缓存镜像，可以在构建时指定--no-cache参数，如：docker build --no-cache</span><br></pre></td></tr></table></figure>
-
 <h3 id="COPY-复制指令，从上下文目录中复制文件或者目录到容器里指定路径"><a href="#COPY-复制指令，从上下文目录中复制文件或者目录到容器里指定路径" class="headerlink" title="COPY:复制指令，从上下文目录中复制文件或者目录到容器里指定路径"></a><code>COPY</code>:复制指令，从上下文目录中复制文件或者目录到容器里指定路径</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line">    COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;源路径1&gt;...  &lt;目标路径&gt;</span><br><span class="line">    COPY [--chown=&lt;user&gt;:&lt;group&gt;] ["&lt;源路径1&gt;",...  "&lt;目标路径&gt;"]</span><br><span class="line">    [--chown=&lt;user&gt;:&lt;group&gt;]：可选参数，用户改变复制到容器内文件的拥有者和属组。</span><br><span class="line">&lt;源路径&gt;：源文件或者源目录，这里可以是通配符表达式，其通配符规则要满足 Go 的 filepath.Match 规则。例如：</span><br><span class="line">COPY hom* /mydir/</span><br><span class="line">COPY hom?.txt /mydir/</span><br><span class="line">&lt;目标路径&gt;：容器内的指定路径，该路径不用事先建好，路径不存在的话，会自动创建。</span><br></pre></td></tr></table></figure>
-
 <h3 id="ADD-将本地文件添加到容器中"><a href="#ADD-将本地文件添加到容器中" class="headerlink" title="ADD:将本地文件添加到容器中"></a>ADD:将本地文件添加到容器中</h3><p>ADD 指令和 COPY 的使用格式一致（同样需求下，官方推荐使用 COPY）。功能也类似，不同之处如下：</p>
 <ul>
 <li>ADD 的优点：在执行 &lt;源文件&gt; 为 tar 压缩文件的话，压缩格式为 gzip, bzip2 以及 xz 的情况下，会自动复制并解压到 &lt;目标路径&gt;。</li>
@@ -295,44 +290,34 @@
 <p><strong>注意</strong>：如果 Dockerfile 中如果存在多个 CMD 指令，仅最后一个生效。</p>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMD &lt;shell 命令&gt; </span><br><span class="line">CMD ["&lt;可执行文件或命令&gt;","&lt;param1&gt;","&lt;param2&gt;",...] </span><br><span class="line">CMD ["&lt;param1&gt;","&lt;param2&gt;",...]  # 该写法是为 ENTRYPOINT 指令指定的程序提供默认参数</span><br></pre></td></tr></table></figure>
-
 <p>推荐使用第二种格式，执行过程比较明确。第一种格式实际上在运行的过程中也会自动转换成第二种格式运行，并且默认可执行文件是 sh。</p>
 <h3 id="ENTRYPOINT-追加指令"><a href="#ENTRYPOINT-追加指令" class="headerlink" title="ENTRYPOINT:追加指令"></a>ENTRYPOINT:追加指令</h3><p>类似于 CMD 指令，但其不会被 docker run 的命令行参数指定的指令所覆盖，而且这些命令行参数会被当作参数送给 ENTRYPOINT 指令指定的程序。</p>
-<p>但是, 如果运行 docker run 时使用了 –entrypoint 选项，此选项的参数可当作要运行的程序覆盖 ENTRYPOINT 指令指定的程序。</p>
+<p>但是, 如果运行 docker run 时使用了 —entrypoint 选项，此选项的参数可当作要运行的程序覆盖 ENTRYPOINT 指令指定的程序。</p>
 <p><strong>优点</strong>：在执行 docker run 的时候可以指定 ENTRYPOINT 运行所需的参数。</p>
 <p><strong>注意</strong>：如果 Dockerfile 中如果存在多个 ENTRYPOINT 指令，仅最后一个生效。</p>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT ["&lt;executeable&gt;","&lt;param1&gt;","&lt;param2&gt;",...]</span><br></pre></td></tr></table></figure>
-
 <p>可以搭配 CMD 命令使用：一般是变参才会使用 CMD ，这里的 CMD 等于是在给 ENTRYPOINT 传参，以下示例会提到。</p>
 <p>示例：</p>
 <p>假设已通过 Dockerfile 构建了 nginx:test 镜像：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx</span><br><span class="line"></span><br><span class="line">ENTRYPOINT ["nginx", "-c"] # 定参</span><br><span class="line">CMD ["/etc/nginx/nginx.conf"] # 变参</span><br></pre></td></tr></table></figure>
-
 <p>1、不传参运行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run  nginx:<span class="built_in">test</span></span></span><br></pre></td></tr></table></figure>
-
 <p>容器内会默认运行以下命令，启动主进程。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -c /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
-
 <p>2、传参运行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run  nginx:<span class="built_in">test</span> -c /etc/nginx/new.conf</span></span><br></pre></td></tr></table></figure>
-
 <p>容器内会默认运行以下命令，启动主进程(/etc/nginx/new.conf:假设容器内已有此文件)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -c /etc/nginx/new.conf</span><br></pre></td></tr></table></figure>
-
 <h3 id="ENV-设置环境变量"><a href="#ENV-设置环境变量" class="headerlink" title="ENV:设置环境变量"></a>ENV:设置环境变量</h3><p>设置环境变量，定义了环境变量，那么在后续的指令中，就可以使用这个环境变量。</p>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENV &lt;key&gt; &lt;value&gt;</span><br><span class="line">ENV &lt;key1&gt;=&lt;value1&gt; &lt;key2&gt;=&lt;value2&gt;...</span><br></pre></td></tr></table></figure>
-
 <p>以下示例设置 NODE_VERSION = 7.2.0 ， 在后续的指令中可以通过 $NODE_VERSION 引用：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ENV NODE_VERSION 7.2.0</span><br><span class="line">RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \</span><br><span class="line">  &amp;&amp; curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc"</span><br></pre></td></tr></table></figure>
-
 <h3 id="ARG-设置的环境变量仅对-Dockerfile-内有效"><a href="#ARG-设置的环境变量仅对-Dockerfile-内有效" class="headerlink" title="ARG:设置的环境变量仅对 Dockerfile 内有效"></a>ARG:设置的环境变量仅对 Dockerfile 内有效</h3><p>构建参数，与 ENV 作用一至。不过作用域不一样。ARG 设置的环境变量仅对 Dockerfile 内有效，也就是说只有 docker build 的过程中有效，构建好的镜像内不存在此环境变量。</p>
-<p>构建命令 docker build 中可以用 –build-arg &lt;参数名&gt;=&lt;值&gt; 来覆盖。</p>
+<p>构建命令 docker build 中可以用 —build-arg &lt;参数名&gt;=&lt;值&gt; 来覆盖。</p>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ARG &lt;参数名&gt;[=&lt;默认值&gt;]</span><br></pre></td></tr></table></figure>
-
 <h3 id="VOLUME-定义匿名数据卷"><a href="#VOLUME-定义匿名数据卷" class="headerlink" title="VOLUME:定义匿名数据卷"></a>VOLUME:定义匿名数据卷</h3><p>定义匿名数据卷。在启动容器时忘记挂载数据卷，会自动挂载到匿名卷。</p>
 <p>作用：</p>
 <ul>
@@ -341,7 +326,6 @@
 </ul>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VOLUME ["&lt;路径1&gt;", "&lt;路径2&gt;"...]</span><br><span class="line">VOLUME &lt;路径&gt;</span><br></pre></td></tr></table></figure>
-
 <p>在启动容器 docker run 的时候，我们可以通过 -v 参数修改挂载点。</p>
 <h3 id="EXPOSE-暴露端口"><a href="#EXPOSE-暴露端口" class="headerlink" title="EXPOSE:暴露端口"></a>EXPOSE:暴露端口</h3><p>仅仅只是声明端口。</p>
 <p>作用：</p>
@@ -351,51 +335,38 @@
 </ul>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPOSE &lt;端口1&gt; [&lt;端口2&gt;...]</span><br></pre></td></tr></table></figure>
-
 <h3 id="WORKDIR-docker-run之后的目录"><a href="#WORKDIR-docker-run之后的目录" class="headerlink" title="WORKDIR:docker run之后的目录"></a>WORKDIR:docker run之后的目录</h3><p>指定工作目录。用 WORKDIR 指定的工作目录，会在构建镜像的每一层中都存在。（WORKDIR 指定的工作目录，必须是提前创建好的）。</p>
 <p>docker build 构建镜像过程中的，每一个 RUN 命令都是新建的一层。只有通过 WORKDIR 创建的目录才会一直存在。</p>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WORKDIR &lt;工作目录路径&gt;</span><br></pre></td></tr></table></figure>
-
 <h3 id="USER-指定运行后面指令的用户和用户组"><a href="#USER-指定运行后面指令的用户和用户组" class="headerlink" title="USER:指定运行后面指令的用户和用户组"></a>USER:指定运行后面指令的用户和用户组</h3><p>用于指定执行后续命令的用户和用户组，这边只是切换后续命令执行的用户（用户和用户组必须提前已经存在）。</p>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USER &lt;用户名&gt;[:&lt;用户组&gt;]</span><br></pre></td></tr></table></figure>
-
 <h3 id="HEALTHCHECK-用于指定某个程序或者指令来监控-docker-容器服务的运行状态。"><a href="#HEALTHCHECK-用于指定某个程序或者指令来监控-docker-容器服务的运行状态。" class="headerlink" title="HEALTHCHECK:用于指定某个程序或者指令来监控 docker 容器服务的运行状态。"></a>HEALTHCHECK:用于指定某个程序或者指令来监控 docker 容器服务的运行状态。</h3><p>用于指定某个程序或者指令来监控 docker 容器服务的运行状态。</p>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HEALTHCHECK [选项] CMD &lt;命令&gt;：设置检查容器健康状况的命令</span><br><span class="line">HEALTHCHECK NONE：如果基础镜像有健康检查指令，使用这行可以屏蔽掉其健康检查指令</span><br><span class="line">HEALTHCHECK [选项] CMD &lt;命令&gt; : 这边 CMD 后面跟随的命令使用，可以参考 CMD 的用法。</span><br></pre></td></tr></table></figure>
-
 <h3 id="ONBUILD-用于延迟构建命令的执行"><a href="#ONBUILD-用于延迟构建命令的执行" class="headerlink" title="ONBUILD:用于延迟构建命令的执行"></a>ONBUILD:用于延迟构建命令的执行</h3><p>用于延迟构建命令的执行。简单的说，就是 Dockerfile 里用 ONBUILD 指定的命令，在本次构建镜像的过程中不会执行（假设镜像为 test-build）。当有新的 Dockerfile 使用了之前构建的镜像 FROM test-build ，这是执行新镜像的 Dockerfile 构建时候，会执行 test-build 的 Dockerfile 里的 ONBUILD 指定的命令。</p>
 <p>格式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ONBUILD &lt;其它指令&gt;</span><br></pre></td></tr></table></figure>
-
 <p>以上参考: <a href="https://www.runoob.com/docker/docker-dockerfile.html" target="_blank" rel="noopener">https://www.runoob.com/docker/docker-dockerfile.html</a></p>
 <h2 id="实例-制作一个Dockerfile"><a href="#实例-制作一个Dockerfile" class="headerlink" title="实例:制作一个Dockerfile"></a>实例:制作一个Dockerfile</h2><p>我们在<code>/home</code>下新建一个文件夹 <code>mkdir -f /home/project</code> </p>
 <p>进入该目录 <code>cd /home/project</code></p>
 <p><code>vim app.py</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#app.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello DockerFile!'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run(host=<span class="string">'0.0.0.0'</span>, port=<span class="number">5000</span>)</span><br></pre></td></tr></table></figure>
-
 <p>新建一个<code>Dockerfile</code>文件,</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Base images 基础镜像 必须放在开头</span></span><br><span class="line">FROM centos</span><br><span class="line"><span class="meta">#</span><span class="bash">MAINTAINER 维护者信息</span></span><br><span class="line">MAINTAINER Tigercoll</span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新 以及安装python</span></span><br><span class="line">RUN yum -y install python3</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装flask</span></span><br><span class="line">RUN pip3 install flask</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置环境项目目录</span></span><br><span class="line">ENV WORKPATH /flask/project</span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建目录</span></span><br><span class="line">RUN mkdir -p $WORKPATH</span><br><span class="line"><span class="meta">#</span><span class="bash"> 拷贝文件到项目目录</span></span><br><span class="line">COPY app.py $WORKPATH</span><br><span class="line"><span class="meta">#</span><span class="bash"> 切换工作目录</span></span><br><span class="line">WORKDIR $WORKPATH</span><br><span class="line"><span class="meta">#</span><span class="bash"> 暴露端口</span></span><br><span class="line">EXPOSE 5000</span><br><span class="line"><span class="meta">#</span><span class="bash"> 容器启动时执行</span></span><br><span class="line">CMD python3 app.py</span><br></pre></td></tr></table></figure>
-
 <p>制作镜像 <code>docker build -t flask:1.0 .</code>  如果名字是Dockerfile的话就不需要 <code>-f</code> 指定,如果不是请用 <code>-f</code> 指定文件,</p>
 <p>这个<code>.</code>是上下文路径:上下文路径，是指 docker 在构建镜像，有时候想要使用到本机的文件（比如复制），docker build 命令得知这个路径后，会将路径下的所有内容打包。</p>
 <p><strong>解析</strong>：由于 docker 的运行模式是 C/S。我们本机是 C，docker 引擎是 S。实际的构建过程是在 docker 引擎下完成的，所以这个时候无法用到我们本机的文件。这就需要把我们本机的指定目录下的文件一起打包提供给 docker 引擎使用。</p>
 <p>如果未说明最后一个参数，那么默认上下文路径就是 Dockerfile 所在的位置。</p>
 <p><strong>注意</strong>：上下文路径下不要放无用的文件，因为会一起打包发送给 docker 引擎，如果文件过多会造成过程缓慢。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Removing intermediate container 53b01ced53d2</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 708e9ab6c83e</span></span><br><span class="line">Step 10/10 : CMD python3 app.py</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> 871455a7187c</span></span><br><span class="line">Removing intermediate container 871455a7187c</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 90d4d1c76098</span></span><br><span class="line">Successfully built 90d4d1c76098</span><br><span class="line">Successfully tagged flask:1.0</span><br></pre></td></tr></table></figure>
-
 <p>可以看到这里制作成功了我们<code>docker images</code>看一下</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost project]# docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">flask               1.0                 90d4d1c76098        4 minutes ago       275MB</span><br><span class="line">centos              latest              470671670cac        4 months ago        237MB</span><br></pre></td></tr></table></figure>
-
 <p>运行一下 <code>docker run -d -p 5000:5000 flask:1.0</code> </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost project]# docker run -d -p 5000:5000 flask:1.0</span><br><span class="line">ea4400c411b18c286731b51ce2e4b7b13c320e08a10b3f7b55e6fb5ed6220722</span><br></pre></td></tr></table></figure>
-
 <p>查看<code>docker ps</code></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost project]# docker ps</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES</span><br><span class="line">ea4400c411b1        flask:1.0           "/bin/sh -c 'python3…"   23 seconds ago      Up 22 seconds       0.0.0.0:5000-&gt;5000/tcp   admiring_agnesi</span><br></pre></td></tr></table></figure>
-
-
-
 <p><img src="/images/Dockerfile/image-20200604233641684.png" alt=""></p>
 <p>可以看到浏览器能正常访问,说明我们的Dockerfile 制作成功</p>
 
@@ -519,20 +490,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -643,6 +614,8 @@
 
 
 
+
+  
 
   
 

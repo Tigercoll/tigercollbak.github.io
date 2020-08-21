@@ -259,7 +259,6 @@
       
         <p>这个模块对有序列表提供了支持，使得他们可以在插入新数据仍然保持有序。对于长列表，如果其包含元素的比较操作十分昂贵的话，这可以是对更常见方法的改进。这个模块叫做 <a href="https://docs.python.org/zh-cn/3.6/library/bisect.html#module-bisect" target="_blank" rel="noopener"><code>bisect</code></a> 因为其使用了基本的二分（bisection）算法。源代码也可以作为很棒的算法示例（边界判断也做好啦！）</p>
 <a id="more"></a>
-
 <p>定义了以下函数：</p>
 <ul>
 <li><p><code>bisect</code>.<code>bisect_left</code>(<em>a</em>, <em>x</em>, <em>lo=0</em>, <em>hi=len(a)</em>)</p>
@@ -281,7 +280,6 @@
 </ul>
 <p>以上来源于:<a href="https://docs.python.org/zh-cn/3.6/library/bisect.html" target="_blank" rel="noopener">https://docs.python.org/zh-cn/3.6/library/bisect.html</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bisect</span><br><span class="line"></span><br><span class="line">data = []</span><br><span class="line">bisect.insort(data,<span class="number">1</span>)</span><br><span class="line">bisect.insort(data,<span class="number">3</span>)</span><br><span class="line">bisect.insort(data,<span class="number">2</span>)</span><br><span class="line">bisect.insort(data,<span class="number">9</span>)</span><br><span class="line">print(data)</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认是查找右边,与bisect_right一样</span></span><br><span class="line">index = bisect.bisect(data,<span class="number">4</span>)</span><br><span class="line">index_1 = bisect.bisect_right(data,<span class="number">5</span>)</span><br><span class="line">print(index,index_1)</span><br><span class="line"><span class="number">3</span> <span class="number">3</span></span><br><span class="line"><span class="comment"># 查找左边</span></span><br><span class="line">index = bisect.bisect_left(data,<span class="number">0</span>)</span><br><span class="line">print(index)</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
-
 <p>功能很简单,如果之后有遇到需要排序插入的场景,可以用</p>
 
     </div>
@@ -402,20 +400,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -526,6 +524,8 @@
 
 
 
+
+  
 
   
 

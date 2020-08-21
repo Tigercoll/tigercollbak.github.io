@@ -262,27 +262,18 @@
         <h1 id="设置-SSH-通过密钥登录"><a href="#设置-SSH-通过密钥登录" class="headerlink" title="设置 SSH 通过密钥登录"></a>设置 SSH 通过密钥登录</h1><p>我们一般使用 xshell 等 SSH 客户端来远程管理 Linux 服务器。但是，一般的密码方式登录，容易有密码被暴力破解的问题。所以，一般我们会将 SSH 的端口设置为默认的 22 以外的端口，或者禁用 root 账户登录。其实，有一个更好的办法来保证安全，而且让你可以放心地用 root 账户从远程登录——那就是通过密钥方式登录。</p>
 <p>密钥形式登录的原理是：利用密钥生成器制作一对密钥——一只公钥和一只私钥。将公钥添加到服务器的某个账户上，然后在客户端利用私钥即可完成认证并登录。这样一来，没有私钥，任何人都无法通过 SSH 暴力破解你的密码来远程登录到系统。此外，如果将公钥复制到其他账户甚至主机，利用私钥也可以登录。</p>
 <a id="more"></a>
-
 <h2 id="制作密钥对"><a href="#制作密钥对" class="headerlink" title="制作密钥对"></a>制作密钥对</h2><p>首先在服务器上制作密钥对。首先用密码登录到你打算使用密钥登录的账户，然后执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@10-7-189-100 ~]<span class="comment"># ssh-keygen   # 建立密钥对</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa):  <span class="comment"># 按回车</span></span><br><span class="line">Created directory <span class="string">'/root/.ssh'</span>.</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):  	<span class="comment"># 输入密钥密码或者直接回车</span></span><br><span class="line">Enter same passphrase again: 					<span class="comment"># 再次确认密码</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.  <span class="comment"># 私钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub.  <span class="comment"># 公钥</span></span><br><span class="line">The key fingerprint is:</span><br><span class="line">6c:ab:06:cf:d1:c5:22:89:2a:89:91:bf:66:e5:79:8e root@10-7-189-100</span><br><span class="line">The key<span class="string">'s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">|                 |</span></span><br><span class="line"><span class="string">|                 |</span></span><br><span class="line"><span class="string">| .   . . .       |</span></span><br><span class="line"><span class="string">|o   . o.. o      |</span></span><br><span class="line"><span class="string">|.+ .   oSo       |</span></span><br><span class="line"><span class="string">|+ o o ....       |</span></span><br><span class="line"><span class="string">| . + = ..        |</span></span><br><span class="line"><span class="string">|  + o.=.         |</span></span><br><span class="line"><span class="string">| o  E+o          |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="在服务器上安装公钥"><a href="#在服务器上安装公钥" class="headerlink" title="在服务器上安装公钥"></a>在服务器上安装公钥</h2><p>键入以下命令，在服务器上安装公钥：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@10-7-189-100 ~]# cd .ssh</span><br><span class="line">[root@10-7-189-100 .ssh]# ls</span><br><span class="line">id_rsa  id_rsa.pub</span><br><span class="line">[root@10-7-189-100 .ssh]# cat id_rsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure>
-
 <p>如此便完成了公钥的安装。为了确保连接成功，请保证以下文件权限正确：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@10-7-189-100 .ssh]# chmod 600 authorized_keys </span><br><span class="line">[root@10-7-189-100 .ssh]# chmod 700 ~/.ssh</span><br></pre></td></tr></table></figure>
-
-
-
 <h2 id="设置SSH-修改配置文件"><a href="#设置SSH-修改配置文件" class="headerlink" title="设置SSH,修改配置文件"></a>设置SSH,修改配置文件</h2><p>编辑 <code>/etc/ssh/sshd_config</code>文件，进行如下设置：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@10-7-189-100 .ssh]<span class="comment"># vi /etc/ssh/sshd_config </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到这两个去掉 注释即可</span></span><br><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br></pre></td></tr></table></figure>
-
 <p>另外，请留意 root 用户能否通过 SSH 登录：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
-
 <p>重启 SSH 服务：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@host .ssh]$ service sshd restart</span><br></pre></td></tr></table></figure>
-
 <p>最后,当你完成全部设置，并以密钥方式登录成功后，再禁用密码登录：<font color='red'>切记一定要可以通过密钥登录了之后再取消密码登录</font></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PasswordAuthentication no</span><br></pre></td></tr></table></figure>
     </div>
@@ -406,20 +397,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -530,6 +521,8 @@
 
 
 
+
+  
 
   
 

@@ -2261,4 +2261,49 @@
         <tag>大数据</tag>
       </tags>
   </entry>
+  <entry>
+    <title>导数公式</title>
+    <url>/2020/08/27/%E5%AF%BC%E6%95%B0%E5%85%AC%E5%BC%8F/</url>
+    <content><![CDATA[<h3 id="公式"><a href="#公式" class="headerlink" title="公式:"></a>公式:</h3><ol>
+<li>$y=x^2    \qquad y \prime=2x$  </li>
+<li>$y=c  \qquad y\prime=0$</li>
+<li>$y=x^n  \qquad y\prime=nx^{n-1}$</li>
+<li>$y=x^a  \qquad y\prime=ax^{a-1}$</li>
+<li>$y=\sin x  \qquad y\prime=\cos x$</li>
+<li>$y=\cos x  \qquad y\prime=- \sin x$</li>
+<li>$y=\log_a x  \qquad y\prime= \frac{1}{x} \log_a e$</li>
+<li>$y=\ln x  \qquad y\prime=\frac {1}{x}$</li>
+<li>$y=a^x  \qquad y\prime=a^x \ln a$</li>
+<li>$y=e^e  \qquad y\prime=e^x$</li>
+</ol>
+]]></content>
+      <categories>
+        <category>微积分</category>
+      </categories>
+      <tags>
+        <tag>微积分</tag>
+        <tag>导数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>无穷小替换</title>
+    <url>/2020/08/27/%E6%97%A0%E7%A9%B7%E5%B0%8F%E6%9B%BF%E6%8D%A2/</url>
+    <content><![CDATA[<h3 id="公式"><a href="#公式" class="headerlink" title="公式:"></a>公式:</h3><p>当$x \to 0$ 时</p>
+<ol>
+<li>$ \ln(1+x) \sim x$</li>
+<li>$e^x-1 \sim x$</li>
+<li>$\quad \sqrt[n]{1+x}-1 \sim \frac{1}{n}x$</li>
+<li>$a^x-1 \sim x \ln a$</li>
+<li>$\sin x \sim x$</li>
+<li>$tan x \sim x$</li>
+</ol>
+]]></content>
+      <categories>
+        <category>微积分</category>
+      </categories>
+      <tags>
+        <tag>微积分</tag>
+        <tag>极限</tag>
+      </tags>
+  </entry>
 </search>

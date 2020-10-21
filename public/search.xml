@@ -2306,4 +2306,100 @@
         <tag>极限</tag>
       </tags>
   </entry>
+  <entry>
+    <title>基本积分公式</title>
+    <url>/2020/08/28/%E5%9F%BA%E6%9C%AC%E7%A7%AF%E5%88%86%E5%85%AC%E5%BC%8F/</url>
+    <content><![CDATA[<ol>
+<li>$\int k\,dx = kx +c$</li>
+<li>$\int x^a \,dx = \frac{x^{a+1}}{a+1} + c$</li>
+<li>$\int \frac{1}{x}\, dx = \ln|x| + c$</li>
+<li>$\frac{1}{x+x^2}\,dx = \arctan x +c$</li>
+<li>$\frac{1}{ \sqrt {x+x^2}}dx = \arcsin x +c$</li>
+<li>$\int \cos x \,dx = \sin x +c$</li>
+<li>$\int \sin x \,dx = -\cos x +c$</li>
+<li>$\int \frac{1}{cos^2x} \,dx = \int \sec^2x \,dx=\tan x +c$  </li>
+<li>$\int \frac{1}{\sin^2x} \,dx=\int csc^2x\,dx=-\cot x +c$</li>
+<li>$\int \sec x \tan x \,dx=\sec x+c$</li>
+<li>$\int \csc x \cot x \,dx=-csc x +c$</li>
+<li>$\int e^x \,dx=e^x +c$</li>
+<li>$\int a^x \, dx = \frac {a^x}{\ln a}+c$</li>
+</ol>
+]]></content>
+      <categories>
+        <category>微积分</category>
+      </categories>
+      <tags>
+        <tag>微积分</tag>
+        <tag>积分</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用几种分布的期望与方差</title>
+    <url>/2020/10/21/%E5%B8%B8%E7%94%A8%E5%87%A0%E7%A7%8D%E5%88%86%E5%B8%83%E7%9A%84%E6%9C%9F%E6%9C%9B%E4%B8%8E%E6%96%B9%E5%B7%AE/</url>
+    <content><![CDATA[<p>几种常见分布的期望与方差</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">分布</th>
+<th style="text-align:center">定义</th>
+<th style="text-align:center">EX</th>
+<th style="text-align:center">DX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0-1分布</td>
+<td style="text-align:center">$p(x=k)=p^{k}(1-p)^{1-k} \quad k=0,1$</td>
+<td style="text-align:center">p</td>
+<td style="text-align:center">pq</td>
+</tr>
+<tr>
+<td style="text-align:center">二项分布</td>
+<td style="text-align:center">$p(x=k)=C_n^k \quad p^{k}(1-p)^{n-k} \quad k=0,1 \cdots n$</td>
+<td style="text-align:center">np</td>
+<td style="text-align:center">npq</td>
+</tr>
+<tr>
+<td style="text-align:center">几何分布</td>
+<td style="text-align:center">$p(x=k)=(1-p)^{k-1}p \quad k=0,1 \cdots n$</td>
+<td style="text-align:center">$\frac{1}{p}$</td>
+<td style="text-align:center">$\frac{1-p}{p^2}$</td>
+</tr>
+<tr>
+<td style="text-align:center">泊松分布</td>
+<td style="text-align:center">$p(x=k)=\frac{k^ \lambda}{k!} e^{- \lambda} \quad k=0,1, \cdots n$</td>
+<td style="text-align:center">$\lambda$</td>
+<td style="text-align:center">$\lambda$</td>
+</tr>
+<tr>
+<td style="text-align:center">均匀分布</td>
+<td style="text-align:center"><script type="math/tex">f(x)=\begin{cases}\frac {1}{b-a} && x \in [a,b]\\0&& else\end{cases}</script></td>
+<td style="text-align:center">$\frac {b+a}{2}$</td>
+<td style="text-align:center">$\frac {(b-a)^2}{12}$</td>
+</tr>
+<tr>
+<td style="text-align:center">指数分布</td>
+<td style="text-align:center"><script type="math/tex">f(x)= \begin{cases} \lambda e^{-\lambda x} && x>0 \\ 0 && else \end{cases}</script></td>
+<td style="text-align:center">$\frac{1}{\lambda}$</td>
+<td style="text-align:center">$\frac{1}{\lambda^2}$</td>
+</tr>
+<tr>
+<td style="text-align:center">正态分布</td>
+<td style="text-align:center">$f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^\frac{(x-\mu)^2}{2\sigma^2}$</td>
+<td style="text-align:center">$\mu$</td>
+<td style="text-align:center">$\sigma^2$</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>概率论与数理统计</category>
+      </categories>
+      <tags>
+        <tag>期望</tag>
+        <tag>方差</tag>
+      </tags>
+  </entry>
 </search>

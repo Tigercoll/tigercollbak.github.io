@@ -40,7 +40,7 @@
 <h3 id="添加url"><a href="#添加url" class="headerlink" title="添加url"></a>添加url</h3><p>在<code>urls.py</code>中添加url</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> drf.views <span class="keyword">import</span> UserInfoView</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">'admin/'</span>, admin.site.urls),</span><br><span class="line">    path(<span class="string">'api/v1/user/'</span>,UserInfoView.as_view() ), <span class="comment">#这里是一样的没有变化,只是url遵循了restful规范</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><p>我们运行代码查看</p>
-<p><img src="images\DRF之django-rest-framework\1.png" alt=""></p>
+<p><img src="images/DRF之django-rest-framework/1.png" alt=""></p>
 <p>页面效果是rest_framework帮我们渲染的一个页面,只对浏览器有效</p>
 <h3 id="发送POST请求"><a href="#发送POST请求" class="headerlink" title="发送POST请求"></a>发送POST请求</h3><p>接下来,我们来发一个post请求看看:</p>
 <p>编写视图<code>views.py</code></p>

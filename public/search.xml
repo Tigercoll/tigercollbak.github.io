@@ -2541,4 +2541,61 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
         <tag>redis</tag>
       </tags>
   </entry>
+  <entry>
+    <title>JWT json-web-token 介绍</title>
+    <url>/2021/01/10/JWT-json-web-token-%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<p>根据维基百科的定义，<strong>JSON WEB Token</strong>（<strong>JWT</strong>，读作 [/dʒɒt/]），是一种基于JSON的、用于在网络上声明某种主张的令牌（token）。JWT通常由三部分组成: 头信息（header）, 消息体（payload）和签名（signature）。</p>
+<h3 id="JWT特点："><a href="#JWT特点：" class="headerlink" title="JWT特点："></a>JWT特点：</h3><ul>
+<li><strong>简洁(Compact)</strong>: 可以通过URL，POST参数或者在HTTP header发送，因为数据量小，传输速度也很快</li>
+<li><strong>自包含(Self-contained)</strong>：负载中包含了所有用户所需要的信息，避免了多次查询数据库</li>
+</ul>
+<a id="more"></a>
+<h3 id="JWT-的原理"><a href="#JWT-的原理" class="headerlink" title="JWT 的原理"></a>JWT 的原理</h3><p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p>
+<blockquote>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"姓名"</span>: <span class="string">"admin"</span>,</span><br><span class="line">  <span class="attr">"角色"</span>: <span class="string">"管理员"</span>,</span><br><span class="line">  <span class="attr">"到期时间"</span>: <span class="string">"2021年1月1日0点0分"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。</p>
+<p>服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
+<h3 id="JWT结构"><a href="#JWT结构" class="headerlink" title="JWT结构"></a>JWT结构</h3><p>JWT主要包含三个部分之间用英语句号’.’隔开</p>
+<p>header.payload.signature</p>
+<h4 id="头部-header"><a href="#头部-header" class="headerlink" title="头部(header)"></a>头部(header)</h4><p>在header中通常包含两部分,token类型和采用的加密算法</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"alg"</span>:<span class="string">"HS256"</span>,</span><br><span class="line">    <span class="attr">"typ"</span>:<span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，<code>alg</code>属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；<code>typ</code>属性表示这个令牌（token）的类型（type），JWT 令牌统一写为<code>JWT</code>。</p>
+<p>然后再将其进行base64编码得到如下:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> json ,base64</span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为我们有可能把token放到后面 /?token=xxx,所以我们选择urlsafe_b64encode </span></span><br><span class="line">header = base64.urlsafe_b64encode(json.dumps(&#123;<span class="string">"alg"</span>: <span class="string">"HS256"</span>,  <span class="string">"typ"</span>: <span class="string">"JWT"</span>&#125;).encode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line">header</span><br><span class="line"><span class="comment"># b'eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9'</span></span><br></pre></td></tr></table></figure>
+<h4 id="JWT的负载-Payload"><a href="#JWT的负载-Payload" class="headerlink" title="JWT的负载(Payload)"></a>JWT的负载(Payload)</h4><p>Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">iss (issuer)：签发人</span><br><span class="line">exp (expiration time)：过期时间</span><br><span class="line">sub (subject)：主题</span><br><span class="line">aud (audience)：受众</span><br><span class="line">nbf (Not Before)：生效时间</span><br><span class="line">iat (Issued At)：签发时间</span><br><span class="line">jti (JWT ID)：编号</span><br></pre></td></tr></table></figure>
+<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"user_name"</span>:<span class="string">"admin"</span>,</span><br><span class="line">    <span class="attr">"user_id"</span>:<span class="string">"123"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们再将其用base64编码一下:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> json ,base64</span><br><span class="line"></span><br><span class="line">payload = base64.urlsafe_b64encode(json.dumps(&#123;</span><br><span class="line">    <span class="string">"user_name"</span>:<span class="string">"admin"</span>,</span><br><span class="line">    <span class="string">"user_id"</span>:<span class="string">"123"</span>,</span><br><span class="line">&#125;).encode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line">payload</span><br><span class="line">Out[<span class="number">3</span>]: <span class="string">b'eyJ1c2VyX25hbWUiOiAiYWRtaW4iLCAidXNlcl9pZCI6ICIxMjMifQ=='</span></span><br></pre></td></tr></table></figure>
+<p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。</p>
+<h4 id="Signature-签名"><a href="#Signature-签名" class="headerlink" title="Signature(签名)"></a>Signature(签名)</h4><p>签名其实是对JWT的头部和负载整合的一个签名验证</p>
+<p>首先需要将头部和负载通过.连接起来.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sig = header+<span class="string">b'.'</span>+payload</span><br><span class="line"><span class="string">b'eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJ1c2VyX25hbWUiOiAiYWRtaW4iLCAidXNlcl9pZCI6ICIxMjMifQ=='</span></span><br></pre></td></tr></table></figure>
+<p>然后再对其用HMacSHA256加密算法,这里需要用到一个Key</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> hmac</span><br><span class="line">key = <span class="string">b'test'</span></span><br><span class="line">signature = hmac.new(key,sig,digestmod=<span class="string">'SHA256'</span>)</span><br><span class="line">sign = signature.hexdigest()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到字符串 注意这里得到的是字符串</span></span><br><span class="line"><span class="string">'0867e2b9ca7c5bec8a8d348487df710429324830ccd00652875a809560c28536'</span></span><br></pre></td></tr></table></figure>
+<p>然后再对其使用base64位加密</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sign = base64.urlsafe_b64encode(signature.hexdigest().encode(<span class="string">'utf-8'</span>))   <span class="string">b'MDg2N2UyYjljYTdjNWJlYzhhOGQzNDg0ODdkZjcxMDQyOTMyNDgzMGNjZDAwNjUyODc1YTgwOTU2MGMyODUzNg=='</span></span><br></pre></td></tr></table></figure>
+<p>最终我们得到JWT</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">jwt = header+<span class="string">b'.'</span>+payload+<span class="string">b'.'</span>+sign</span><br><span class="line"><span class="string">b'eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJ1c2VyX25hbWUiOiAiYWRtaW4iLCAidXNlcl9pZCI6ICIxMjMifQ==.MDg2N2UyYjljYTdjNWJlYzhhOGQzNDg0ODdkZjcxMDQyOTMyNDgzMGNjZDAwNjUyODc1YTgwOTU2MGMyODUzNg=='</span></span><br></pre></td></tr></table></figure>
+<h3 id="JWT的使用"><a href="#JWT的使用" class="headerlink" title="JWT的使用"></a>JWT的使用</h3><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息<code>Authorization</code>字段里面。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="JWT-的几个特点"><a href="#JWT-的几个特点" class="headerlink" title="JWT 的几个特点"></a>JWT 的几个特点</h3><p>（1）JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</p>
+<p>（2）JWT 不加密的情况下，不能将秘密数据写入 JWT。</p>
+<p>（3）JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。</p>
+<p>（4）JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。</p>
+<p>（5）JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</p>
+<p>（6）为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</p>
+<p>以上借鉴了阮一峰大神的博客,<a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">博客地址</a></p>
+]]></content>
+      <categories>
+        <category>JWT</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>JWT</tag>
+      </tags>
+  </entry>
 </search>

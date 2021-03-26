@@ -363,21 +363,24 @@
 <a id="more"></a>
 <h2 id="授权"><a href="#授权" class="headerlink" title="授权:"></a>授权:</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grant</span> privilegesCode <span class="keyword">on</span> dbName.tableName <span class="keyword">to</span> username@host <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">"password"</span>;</span><br></pre></td></tr></table></figure>
 <h3 id="说明-1"><a href="#说明-1" class="headerlink" title="说明:"></a>说明:</h3><ul>
-<li>privilegesCode:权限,</li>
+<li><p>privilegesCode:权限,</p>
+<ul>
 <li>all privileges：所有权限。</li>
-<li>select：读取权限。<ul>
+<li>select：读取权限。</li>
 <li>delete：删除权限。</li>
 <li>update：更新权限。</li>
 <li>create：创建权限。</li>
-<li>drop：删除数据库、数据表权限。</li>
-</ul>
+<li><p>drop：删除数据库、数据表权限。</p>
 </li>
-<li>dbName:数据库名.</li>
+<li><p>dbName:数据库名.</p>
+</li>
 <li>tableName:表名.</li>
 <li>username@host:赋予权限的用户.</li>
 <li>password:密码</li>
 </ul>
-<p>加完权限需要刷线一下</p>
+</li>
+</ul>
+<p>加完权限需要刷新一下</p>
 <p><code>flush privileges :表示刷新权限变更。</code></p>
 <h3 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h3><p>用以上命令授权的用户不能给其它用户授权，如果想让该用户可以授权，用以下命令:</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">privileges</span> <span class="keyword">ON</span> databasename.tablename <span class="keyword">TO</span> <span class="string">'username'</span>@<span class="string">'host'</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> <span class="keyword">OPTION</span>;</span><br></pre></td></tr></table></figure>

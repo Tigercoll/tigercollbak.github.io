@@ -370,10 +370,12 @@
 <li>delete：删除权限。</li>
 <li>update：更新权限。</li>
 <li>create：创建权限。</li>
-<li><p>drop：删除数据库、数据表权限。</p>
+<li>drop：删除数据库、数据表权限.</li>
+</ul>
 </li>
-<li><p>dbName:数据库名.</p>
-</li>
+</ul>
+<ul>
+<li>dbName:数据库名.<ul>
 <li>tableName:表名.</li>
 <li>username@host:赋予权限的用户.</li>
 <li>password:密码</li>

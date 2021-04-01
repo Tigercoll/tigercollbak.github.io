@@ -2699,4 +2699,191 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>魔方PLL公式</title>
+    <url>/2021/03/29/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/</url>
+    <content><![CDATA[<hr>
+<p>title：魔方PLL公式<br>categories:CFOP<br>tag:[‘魔方’，’CFOP公式’]</p>
+<h2 id="typora-root-url"><a href="#typora-root-url" class="headerlink" title="typora-root-url:.."></a>typora-root-url:..</h2><h2 id="顶层排列（PLL）"><a href="#顶层排列（PLL）" class="headerlink" title="顶层排列（PLL）"></a>顶层排列（PLL）</h2><p>PLL 是魔方恢复的最后一个步骤，PLL 共有 (4！X 4！)/2种组合，排除相同情形（经过旋转），共有21种不同的图形，不含镜像的话为13种。</p>
+<p><strong>所有打乱公式都是黄底绿前</strong></p>
+<a id="more"></a>
+<h2 id="三角换："><a href="#三角换：" class="headerlink" title="三角换："></a>三角换：</h2><h3 id="顺时针-Aa"><a href="#顺时针-Aa" class="headerlink" title="顺时针(Aa):"></a>顺时针(Aa):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_04a.png" alt="pll 04" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x R U’ R D2’ R’ U R D2’ R2’ x</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>x’ R2 D2 R’ U’ R D2 R’ U R’</strong> </li>
+<li><strong>y’ x R’ U R’ D2 R U’ R’ D2 R2</strong></li>
+<li><strong>y2 R U R’ F’ r U R’ U’ r’ F R2 U’ R’</strong></li>
+</ol>
+<h3 id="逆时针-Ab"><a href="#逆时针-Ab" class="headerlink" title="逆时针(Ab):"></a>逆时针(Ab):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_03.png" alt="pll 03" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y’ x R’ U R’ D2’ R U’ R’ D2’ R2’ x’ y</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>x’ R U’ R D2 R’ U R D2 R2</strong></li>
+<li><strong>y’ x R2 D2 R U R’ D2 R U’ R</strong></li>
+</ol>
+<h2 id="对角换（E）："><a href="#对角换（E）：" class="headerlink" title="对角换（E）："></a>对角换（E）：</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_07a.png" alt="pll 07" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x U’ R U L’ U’ R’ U r2 U R’ U’ L’ U R U’ x’</strong></p>
+<p>公式：</p>
+<ol>
+<li><p><strong>y x’ R U’ R’ D R U R’ D’ R U R’ D R U’ R’ D’</strong></p>
+</li>
+<li><p><strong>R2 U R’ U’ y R U R’ U’ R U R’ U’ R U R’ y’ R U’ R2</strong></p>
+</li>
+<li><p><strong>x U R’ U’ L U R U’ r2’ U’ R U L U’ R’ U</strong></p>
+</li>
+</ol>
+<h2 id="对角对棱互换（F）："><a href="#对角对棱互换（F）：" class="headerlink" title="对角对棱互换（F）："></a>对角对棱互换（F）：</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_10a.png" alt="pll 10" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R’ U’ R U’ R’ U R U R2’ F’ R U R U’ R’ F U R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R’ U’ F’ R U R’ U’ R’ F R2 U’ R’ U’ R U R’ U R</strong></li>
+<li><strong>y R’ U2 R’ U’ y R’ F’ R2 U’ R’ U R’ F R U’ F</strong></li>
+</ol>
+<h2 id="三角换-三棱换-Ga"><a href="#三角换-三棱换-Ga" class="headerlink" title="三角换+三棱换(Ga):"></a>三角换+三棱换(Ga):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_19b.png" alt="pll 19" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y’ R’ U’ R y R2’ u R’ U R U’ R u’ R2’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R2 u R’ U R’ U’ R u’ R2 y’ R’ U R</strong></li>
+<li><strong>R2 U R’ U R’ U’ R U’ R2 D U’ R’ U R D’ U</strong></li>
+<li><strong>R2 u R’ U R’ U’ R D’ F2 L’ U L</strong></li>
+</ol>
+<h2 id="三角换-三棱换-Gb"><a href="#三角换-三棱换-Gb" class="headerlink" title="三角换+三棱换(Gb):"></a>三角换+三棱换(Gb):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_18c.png" alt="pll 18" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y R2’ u R’ U R’ U’ R u’ R2’ y’ R’ U R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R’ U’ R y R2 u R’ U R U’ R u’ R2</strong></li>
+<li><strong>y F’ U’ F R2 u R’ U R U’ R u’ R2</strong></li>
+</ol>
+<h2 id="三角换-三棱换-Gc"><a href="#三角换-三棱换-Gc" class="headerlink" title="三角换+三棱换(Gc):"></a>三角换+三棱换(Gc):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_17b.png" alt="pll 17" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y R U R’ y’ R2 u’ R U’ R’ U R’ u R2</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R2 u’ R U’ R U R’ u R2 y R U’ R’</strong></li>
+<li><strong>y2 R2 F2 R U2 R U2 R’ F R U R’ U’ R’ F R2</strong></li>
+</ol>
+<h2 id="三角换-三棱换-Gd"><a href="#三角换-三棱换-Gd" class="headerlink" title="三角换+三棱换(Gd):"></a>三角换+三棱换(Gd):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_16c.png" alt="pll 16" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y’ R2’ u’ R U’ R U R’ u R2’ y R U’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U R’ y’ R2 u’ R U’ R’ U R’ u R2</strong></li>
+<li><strong>R U R’ U’ D R2 U’ R U’ R’ U R’ U R2 U D’</strong></li>
+</ol>
+<h2 id="对棱互换-H"><a href="#对棱互换-H" class="headerlink" title="对棱互换(H):"></a>对棱互换(H):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_06.png" alt="pll 06" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>M2 U’ M2 U2 M2 U’ M2</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>M2 U’ M2 U2 M2 U’ M2</strong></li>
+<li><strong>R2 U2 R2 U2 R2 U’ R2 U2 R2 U2 R2 U</strong></li>
+<li><strong>R2’ U2’ R U2 R2’ U2’ R2 U2’ R U2’ R2’</strong></li>
+</ol>
+<h2 id="邻角-邻棱-Ja"><a href="#邻角-邻棱-Ja" class="headerlink" title="邻角+邻棱(Ja):"></a>邻角+邻棱(Ja):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_14a.png" alt="pll 14" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 L U’ R’ U L’ U2’ R U’ R’ U2’ R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>x R2 F R F’ R U2 r’ U r U2</strong></li>
+<li><strong>R’ U2 R U R’ U2 L U’ R U L’</strong></li>
+<li><strong>y’ x’ R2 u’ R’ u R2 x’ y’ R’ U R’ U’ R2</strong></li>
+<li><strong>y2 z R’ U’ R D’ R2’ U R’ U’ R2 U D</strong></li>
+<li><strong>x U2 r’ U’ r U2 l’ U R’ U’ l2</strong></li>
+</ol>
+<h2 id="邻角-邻棱-Jb"><a href="#邻角-邻棱-Jb" class="headerlink" title="邻角+邻棱(Jb):"></a>邻角+邻棱(Jb):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_13a.png" alt="pll 12" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 U R U R2’ F’ R U R U’ R’ F R U’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U R’ F’ R U R’ U’ R’ F R2 U’ R’ U’</strong></li>
+<li><strong>R U2 R’ U’ R U2 L’ U R’ U’ L</strong></li>
+<li><strong>y2 R’ U2’ R U R’ F’ R U R’ U’ R’ F R2 U’ R’ U R</strong></li>
+</ol>
+<h2 id="对角对棱-Na"><a href="#对角对棱-Na" class="headerlink" title="对角对棱(Na):"></a>对角对棱(Na):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_21a.png" alt="pll 21" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R U R’ U R U R’ F’ R U R’ U’ R’ F R2 U’ R’ U2 R U’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U R’ U R U R’ F’ R U R’ U’ R’ F R2 U’ R’ U2 R U’ R’</strong></li>
+<li><strong>L U’ R U2 L’ U R’ L U’ R U2 L’ U R’ U’</strong></li>
+</ol>
+<h2 id="对角对棱-Nb"><a href="#对角对棱-Nb" class="headerlink" title="对角对棱(Nb):"></a>对角对棱(Nb):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_20.png" alt="pll 20" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R’ U R’ F R F’ R U’ R’ F’ U F R U R’ U’ R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R’ U R U’ R’ F’ U’ F R U R’ F R’ F’ R U’ R</strong></li>
+<li><strong>R’ U L’ U2 R U’ L R’ U L’ U2 R U’ L U</strong></li>
+<li><strong>R’ U R U’ R’ F’ U’ F R U R’ U’ R U’ f R f’</strong></li>
+</ol>
+<h2 id="邻角-邻棱-Ra"><a href="#邻角-邻棱-Ra" class="headerlink" title="邻角+邻棱(Ra):"></a>邻角+邻棱(Ra):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_12b.png" alt="pll 12" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 U’ R2’ B’ R’ U’ R’ U R B R’ U2’ R U2’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U2 R’ U2 R B’ R’ U’ R U R B R2 U</strong></li>
+<li><strong>y’ R U’ R’ U’ R U R D R’ U’ R D’ R’ U2 R’ U’</strong></li>
+<li><strong>y’ U R U2 R’ U2 R B’ R’ U’ R U R B R2</strong></li>
+<li><strong>R U2 R’ U2 l U’ l’ U’ R U l U R2 F</strong></li>
+</ol>
+<h2 id="邻角-邻棱-Rb"><a href="#邻角-邻棱-Rb" class="headerlink" title="邻角+邻棱(Rb):"></a>邻角+邻棱(Rb):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_11b.png" alt="pll 11" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R’ U R U R’ U’ R’ D’ R U R’ D R U2’ R U</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>y’ R’ U2 R U2 R’ F R U R’ U’ R’ F’ R2 U’</strong></li>
+<li><strong>R’ U R U R’ U’ R’ D’ R U R’ D R U2’ R U</strong></li>
+</ol>
+<h2 id="对棱-邻角-T-："><a href="#对棱-邻角-T-：" class="headerlink" title="对棱+邻角(T)："></a>对棱+邻角(T)：</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_08.png" alt="pll 08" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 F R U’ R’ U R U R2’ F’ R U R U’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U R’ U’ R’ F R2 U’ R’ U’ R U R’ F’</strong></li>
+<li><strong>R2 U R2 U’ R2’ U’ D R2 U’ R2’ U R2 D’</strong></li>
+</ol>
+<h2 id="三棱换："><a href="#三棱换：" class="headerlink" title="三棱换："></a>三棱换：</h2><h3 id="逆时针-Ua"><a href="#逆时针-Ua" class="headerlink" title="逆时针(Ua):"></a>逆时针(Ua):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_02.png" alt="img" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R2’ U R U R’ U’ R’ U’ R’ U R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U’ R U R U R U’ R’ U’ R2</strong></li>
+<li><strong>y2 R2 U’ R’ U’ R U R U R U’ R</strong></li>
+<li><strong>y’ F U R U’ R’ F’ B’ R’ U’ R U B</strong></li>
+<li><strong>U2 R U R’ U R’ U’ R2 U’ R’ U R’ U R</strong></li>
+<li><strong>L U2 L U L U L U’ L’ U’ L’ U L’</strong></li>
+<li><strong>y2 z U R’ U R U R U R’ U’ R’ U2</strong></li>
+<li><strong>z’ U L’ U L U L U L’ U’ L’ U2</strong></li>
+</ol>
+<h3 id="顺时针-Ub"><a href="#顺时针-Ub" class="headerlink" title="顺时针(Ub):"></a>顺时针(Ub):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_01.png" alt="img" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R U’ R U R U R U’ R’ U’ R2</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R2 U R U R’ U’ R’ U’ R’ U R’</strong></li>
+<li><strong>M2 U’ M U2 M’ U’ M2</strong></li>
+<li><strong>y’ B’ U’ R’ U R B F R U R’ U’ F’</strong></li>
+<li><strong>y2 R’ U R’ U’ R’ U’ R’ U R U R2’</strong></li>
+<li><strong>R’ U2 R’ U’ R’ U’ R’ U R U R U’ R</strong></li>
+<li><strong>z U’ R U’ R’ U’ R’ U’ R U R U2</strong></li>
+<li><strong>y2 z’ U’ L U’ L’ U’ L’ U’ L U L U2</strong></li>
+</ol>
+<h2 id="邻棱-对角-V"><a href="#邻棱-对角-V" class="headerlink" title="邻棱+对角(V):"></a>邻棱+对角(V):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_09a.png" alt="pll 09" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 F’ R’ F’ R U’ R U R2’ F R d R U’ R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R’ U R’ d’ R’ F’ R2 U’ R’ U R’ F R F</strong></li>
+<li><strong>y L’ U R U’ L U L’ U R’ U’ L U2 R U2 R’</strong></li>
+<li><strong>R’ U R’ U’ R D’ R’ D R’ U D’ R2 U’ R2 D R2</strong></li>
+</ol>
+<h2 id="邻棱-对角-Y"><a href="#邻棱-对角-Y" class="headerlink" title="邻棱+对角(Y):"></a>邻棱+对角(Y):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_15a.png" alt="pll 15" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 F R’ F’ R U R U’ R’ F R U’ R’ U R U R’ F’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>F R U’ R’ U’ R U R’ F’ R U R’ U’ R’ F R F’</strong></li>
+<li><strong>F R’ F’ R U R U’ R’ F R U’ R’ U R U R’ F’</strong></li>
+</ol>
+<h2 id="邻棱互换-Z"><a href="#邻棱互换-Z" class="headerlink" title="邻棱互换(Z):"></a>邻棱互换(Z):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_05a.png" alt="pll 05" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 U2’ M U2’ M2’ U2’ M U M2’ U M2’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>M2 U’ M2 U’ M’ U2 M2 U2 M’ U2</strong></li>
+<li><strong>R’ U’ R U’ R U R U’ R’ U R U R2 U’ R’ U2</strong></li>
+<li><strong>M2 U M U2 M2 U2 M U’ M2</strong></li>
+<li><strong>y x’ R U’ R’ U D R’ U’ D R’ U R u2’ B</strong></li>
+<li><strong>U2 R’ U’ R U’ R U R U’ R’ U R U R2 U’ R’</strong></li>
+</ol>
+<p>以上就是21种PLL 公式，大家勤加练习，变成肌肉记忆。</p>
+<p>以上所有都出自 <a href="https://maru.tw/solve-cube/algorithm" target="_blank" rel="noopener">小丸号方块屋</a> 如有不便可以通过github联系我删除</p>
+]]></content>
+  </entry>
 </search>

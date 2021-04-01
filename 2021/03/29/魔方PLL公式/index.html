@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tigercoll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
+  </script>
+
+  <meta name="description" content="title：魔方PLL公式categories:CFOPtag:[‘魔方’，’CFOP公式’] typora-root-url:..顶层排列（PLL）PLL 是魔方恢复的最后一个步骤，PLL 共有 (4！X 4！)&#x2F;2种组合，排除相同情形（经过旋转），共有21种不同的图形，不含镜像的话为13种。 所有打乱公式都是黄底绿前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="魔方PLL公式">
+<meta property="og:url" content="https://tigercoll.github.io/2021/03/29/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Tigercoll&#39;s blog">
+<meta property="og:description" content="title：魔方PLL公式categories:CFOPtag:[‘魔方’，’CFOP公式’] typora-root-url:..顶层排列（PLL）PLL 是魔方恢复的最后一个步骤，PLL 共有 (4！X 4！)&#x2F;2种组合，排除相同情形（经过旋转），共有21种不同的图形，不含镜像的话为13种。 所有打乱公式都是黄底绿前">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_04a.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_03.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_07a.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_10a.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_19b.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_18c.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_17b.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_16c.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_06.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_14a.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_13a.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_21a.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_20.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_12b.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_11b.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_08.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_02.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_01.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_09a.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_15a.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_05a.png">
+<meta property="article:published_time" content="2021-03-29T11:37:34.176Z">
+<meta property="article:modified_time" content="2021-04-01T15:20:32.277Z">
+<meta property="article:author" content="Tigercoll">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tigercoll.github.io/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_04a.png">
+
+<link rel="canonical" href="https://tigercoll.github.io/2021/03/29/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>魔方PLL公式 | Tigercoll's blog</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a96c4a898a5cb3af691471bb9804141d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+	
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tigercoll's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/Tigercoll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tigercoll.github.io/2021/03/29/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/p1.jpg">
+      <meta itemprop="name" content="Tigercoll">
+      <meta itemprop="description" content="万丈高楼平地起,勿在浮沙筑高台">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tigercoll's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          魔方PLL公式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-29 19:37:34" itemprop="dateCreated datePublished" datetime="2021-03-29T19:37:34+08:00">2021-03-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-01 23:20:32" itemprop="dateModified" datetime="2021-04-01T23:20:32+08:00">2021-04-01</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<p>title：魔方PLL公式<br>categories:CFOP<br>tag:[‘魔方’，’CFOP公式’]</p>
+<h2 id="typora-root-url"><a href="#typora-root-url" class="headerlink" title="typora-root-url:.."></a>typora-root-url:..</h2><h2 id="顶层排列（PLL）"><a href="#顶层排列（PLL）" class="headerlink" title="顶层排列（PLL）"></a>顶层排列（PLL）</h2><p>PLL 是魔方恢复的最后一个步骤，PLL 共有 (4！X 4！)/2种组合，排除相同情形（经过旋转），共有21种不同的图形，不含镜像的话为13种。</p>
+<p><strong>所有打乱公式都是黄底绿前</strong></p>
+<a id="more"></a>
+<h2 id="三角换："><a href="#三角换：" class="headerlink" title="三角换："></a>三角换：</h2><h3 id="顺时针-Aa"><a href="#顺时针-Aa" class="headerlink" title="顺时针(Aa):"></a>顺时针(Aa):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_04a.png" alt="pll 04" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x R U’ R D2’ R’ U R D2’ R2’ x</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>x’ R2 D2 R’ U’ R D2 R’ U R’</strong> </li>
+<li><strong>y’ x R’ U R’ D2 R U’ R’ D2 R2</strong></li>
+<li><strong>y2 R U R’ F’ r U R’ U’ r’ F R2 U’ R’</strong></li>
+</ol>
+<h3 id="逆时针-Ab"><a href="#逆时针-Ab" class="headerlink" title="逆时针(Ab):"></a>逆时针(Ab):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_03.png" alt="pll 03" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y’ x R’ U R’ D2’ R U’ R’ D2’ R2’ x’ y</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>x’ R U’ R D2 R’ U R D2 R2</strong></li>
+<li><strong>y’ x R2 D2 R U R’ D2 R U’ R</strong></li>
+</ol>
+<h2 id="对角换（E）："><a href="#对角换（E）：" class="headerlink" title="对角换（E）："></a>对角换（E）：</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_07a.png" alt="pll 07" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x U’ R U L’ U’ R’ U r2 U R’ U’ L’ U R U’ x’</strong></p>
+<p>公式：</p>
+<ol>
+<li><p><strong>y x’ R U’ R’ D R U R’ D’ R U R’ D R U’ R’ D’</strong></p>
+</li>
+<li><p><strong>R2 U R’ U’ y R U R’ U’ R U R’ U’ R U R’ y’ R U’ R2</strong></p>
+</li>
+<li><p><strong>x U R’ U’ L U R U’ r2’ U’ R U L U’ R’ U</strong></p>
+</li>
+</ol>
+<h2 id="对角对棱互换（F）："><a href="#对角对棱互换（F）：" class="headerlink" title="对角对棱互换（F）："></a>对角对棱互换（F）：</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_10a.png" alt="pll 10" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R’ U’ R U’ R’ U R U R2’ F’ R U R U’ R’ F U R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R’ U’ F’ R U R’ U’ R’ F R2 U’ R’ U’ R U R’ U R</strong></li>
+<li><strong>y R’ U2 R’ U’ y R’ F’ R2 U’ R’ U R’ F R U’ F</strong></li>
+</ol>
+<h2 id="三角换-三棱换-Ga"><a href="#三角换-三棱换-Ga" class="headerlink" title="三角换+三棱换(Ga):"></a>三角换+三棱换(Ga):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_19b.png" alt="pll 19" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y’ R’ U’ R y R2’ u R’ U R U’ R u’ R2’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R2 u R’ U R’ U’ R u’ R2 y’ R’ U R</strong></li>
+<li><strong>R2 U R’ U R’ U’ R U’ R2 D U’ R’ U R D’ U</strong></li>
+<li><strong>R2 u R’ U R’ U’ R D’ F2 L’ U L</strong></li>
+</ol>
+<h2 id="三角换-三棱换-Gb"><a href="#三角换-三棱换-Gb" class="headerlink" title="三角换+三棱换(Gb):"></a>三角换+三棱换(Gb):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_18c.png" alt="pll 18" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y R2’ u R’ U R’ U’ R u’ R2’ y’ R’ U R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R’ U’ R y R2 u R’ U R U’ R u’ R2</strong></li>
+<li><strong>y F’ U’ F R2 u R’ U R U’ R u’ R2</strong></li>
+</ol>
+<h2 id="三角换-三棱换-Gc"><a href="#三角换-三棱换-Gc" class="headerlink" title="三角换+三棱换(Gc):"></a>三角换+三棱换(Gc):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_17b.png" alt="pll 17" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y R U R’ y’ R2 u’ R U’ R’ U R’ u R2</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R2 u’ R U’ R U R’ u R2 y R U’ R’</strong></li>
+<li><strong>y2 R2 F2 R U2 R U2 R’ F R U R’ U’ R’ F R2</strong></li>
+</ol>
+<h2 id="三角换-三棱换-Gd"><a href="#三角换-三棱换-Gd" class="headerlink" title="三角换+三棱换(Gd):"></a>三角换+三棱换(Gd):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_16c.png" alt="pll 16" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 y’ R2’ u’ R U’ R U R’ u R2’ y R U’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U R’ y’ R2 u’ R U’ R’ U R’ u R2</strong></li>
+<li><strong>R U R’ U’ D R2 U’ R U’ R’ U R’ U R2 U D’</strong></li>
+</ol>
+<h2 id="对棱互换-H"><a href="#对棱互换-H" class="headerlink" title="对棱互换(H):"></a>对棱互换(H):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_06.png" alt="pll 06" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>M2 U’ M2 U2 M2 U’ M2</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>M2 U’ M2 U2 M2 U’ M2</strong></li>
+<li><strong>R2 U2 R2 U2 R2 U’ R2 U2 R2 U2 R2 U</strong></li>
+<li><strong>R2’ U2’ R U2 R2’ U2’ R2 U2’ R U2’ R2’</strong></li>
+</ol>
+<h2 id="邻角-邻棱-Ja"><a href="#邻角-邻棱-Ja" class="headerlink" title="邻角+邻棱(Ja):"></a>邻角+邻棱(Ja):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_14a.png" alt="pll 14" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 L U’ R’ U L’ U2’ R U’ R’ U2’ R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>x R2 F R F’ R U2 r’ U r U2</strong></li>
+<li><strong>R’ U2 R U R’ U2 L U’ R U L’</strong></li>
+<li><strong>y’ x’ R2 u’ R’ u R2 x’ y’ R’ U R’ U’ R2</strong></li>
+<li><strong>y2 z R’ U’ R D’ R2’ U R’ U’ R2 U D</strong></li>
+<li><strong>x U2 r’ U’ r U2 l’ U R’ U’ l2</strong></li>
+</ol>
+<h2 id="邻角-邻棱-Jb"><a href="#邻角-邻棱-Jb" class="headerlink" title="邻角+邻棱(Jb):"></a>邻角+邻棱(Jb):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_13a.png" alt="pll 12" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 U R U R2’ F’ R U R U’ R’ F R U’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U R’ F’ R U R’ U’ R’ F R2 U’ R’ U’</strong></li>
+<li><strong>R U2 R’ U’ R U2 L’ U R’ U’ L</strong></li>
+<li><strong>y2 R’ U2’ R U R’ F’ R U R’ U’ R’ F R2 U’ R’ U R</strong></li>
+</ol>
+<h2 id="对角对棱-Na"><a href="#对角对棱-Na" class="headerlink" title="对角对棱(Na):"></a>对角对棱(Na):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_21a.png" alt="pll 21" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R U R’ U R U R’ F’ R U R’ U’ R’ F R2 U’ R’ U2 R U’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U R’ U R U R’ F’ R U R’ U’ R’ F R2 U’ R’ U2 R U’ R’</strong></li>
+<li><strong>L U’ R U2 L’ U R’ L U’ R U2 L’ U R’ U’</strong></li>
+</ol>
+<h2 id="对角对棱-Nb"><a href="#对角对棱-Nb" class="headerlink" title="对角对棱(Nb):"></a>对角对棱(Nb):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_20.png" alt="pll 20" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R’ U R’ F R F’ R U’ R’ F’ U F R U R’ U’ R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R’ U R U’ R’ F’ U’ F R U R’ F R’ F’ R U’ R</strong></li>
+<li><strong>R’ U L’ U2 R U’ L R’ U L’ U2 R U’ L U</strong></li>
+<li><strong>R’ U R U’ R’ F’ U’ F R U R’ U’ R U’ f R f’</strong></li>
+</ol>
+<h2 id="邻角-邻棱-Ra"><a href="#邻角-邻棱-Ra" class="headerlink" title="邻角+邻棱(Ra):"></a>邻角+邻棱(Ra):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_12b.png" alt="pll 12" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 U’ R2’ B’ R’ U’ R’ U R B R’ U2’ R U2’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U2 R’ U2 R B’ R’ U’ R U R B R2 U</strong></li>
+<li><strong>y’ R U’ R’ U’ R U R D R’ U’ R D’ R’ U2 R’ U’</strong></li>
+<li><strong>y’ U R U2 R’ U2 R B’ R’ U’ R U R B R2</strong></li>
+<li><strong>R U2 R’ U2 l U’ l’ U’ R U l U R2 F</strong></li>
+</ol>
+<h2 id="邻角-邻棱-Rb"><a href="#邻角-邻棱-Rb" class="headerlink" title="邻角+邻棱(Rb):"></a>邻角+邻棱(Rb):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_11b.png" alt="pll 11" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R’ U R U R’ U’ R’ D’ R U R’ D R U2’ R U</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>y’ R’ U2 R U2 R’ F R U R’ U’ R’ F’ R2 U’</strong></li>
+<li><strong>R’ U R U R’ U’ R’ D’ R U R’ D R U2’ R U</strong></li>
+</ol>
+<h2 id="对棱-邻角-T-："><a href="#对棱-邻角-T-：" class="headerlink" title="对棱+邻角(T)："></a>对棱+邻角(T)：</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_08.png" alt="pll 08" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 F R U’ R’ U R U R2’ F’ R U R U’ R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U R’ U’ R’ F R2 U’ R’ U’ R U R’ F’</strong></li>
+<li><strong>R2 U R2 U’ R2’ U’ D R2 U’ R2’ U R2 D’</strong></li>
+</ol>
+<h2 id="三棱换："><a href="#三棱换：" class="headerlink" title="三棱换："></a>三棱换：</h2><h3 id="逆时针-Ua"><a href="#逆时针-Ua" class="headerlink" title="逆时针(Ua):"></a>逆时针(Ua):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_02.png" alt="img" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R2’ U R U R’ U’ R’ U’ R’ U R’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R U’ R U R U R U’ R’ U’ R2</strong></li>
+<li><strong>y2 R2 U’ R’ U’ R U R U R U’ R</strong></li>
+<li><strong>y’ F U R U’ R’ F’ B’ R’ U’ R U B</strong></li>
+<li><strong>U2 R U R’ U R’ U’ R2 U’ R’ U R’ U R</strong></li>
+<li><strong>L U2 L U L U L U’ L’ U’ L’ U L’</strong></li>
+<li><strong>y2 z U R’ U R U R U R’ U’ R’ U2</strong></li>
+<li><strong>z’ U L’ U L U L U L’ U’ L’ U2</strong></li>
+</ol>
+<h3 id="顺时针-Ub"><a href="#顺时针-Ub" class="headerlink" title="顺时针(Ub):"></a>顺时针(Ub):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_01.png" alt="img" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 R U’ R U R U R U’ R’ U’ R2</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R2 U R U R’ U’ R’ U’ R’ U R’</strong></li>
+<li><strong>M2 U’ M U2 M’ U’ M2</strong></li>
+<li><strong>y’ B’ U’ R’ U R B F R U R’ U’ F’</strong></li>
+<li><strong>y2 R’ U R’ U’ R’ U’ R’ U R U R2’</strong></li>
+<li><strong>R’ U2 R’ U’ R’ U’ R’ U R U R U’ R</strong></li>
+<li><strong>z U’ R U’ R’ U’ R’ U’ R U R U2</strong></li>
+<li><strong>y2 z’ U’ L U’ L’ U’ L’ U’ L U L U2</strong></li>
+</ol>
+<h2 id="邻棱-对角-V"><a href="#邻棱-对角-V" class="headerlink" title="邻棱+对角(V):"></a>邻棱+对角(V):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_09a.png" alt="pll 09" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 F’ R’ F’ R U’ R U R2’ F R d R U’ R</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>R’ U R’ d’ R’ F’ R2 U’ R’ U R’ F R F</strong></li>
+<li><strong>y L’ U R U’ L U L’ U R’ U’ L U2 R U2 R’</strong></li>
+<li><strong>R’ U R’ U’ R D’ R’ D R’ U D’ R2 U’ R2 D R2</strong></li>
+</ol>
+<h2 id="邻棱-对角-Y"><a href="#邻棱-对角-Y" class="headerlink" title="邻棱+对角(Y):"></a>邻棱+对角(Y):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_15a.png" alt="pll 15" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 F R’ F’ R U R U’ R’ F R U’ R’ U R U R’ F’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>F R U’ R’ U’ R U R’ F’ R U R’ U’ R’ F R F’</strong></li>
+<li><strong>F R’ F’ R U R U’ R’ F R U’ R’ U R U R’ F’</strong></li>
+</ol>
+<h2 id="邻棱互换-Z"><a href="#邻棱互换-Z" class="headerlink" title="邻棱互换(Z):"></a>邻棱互换(Z):</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_05a.png" alt="pll 05" style="zoom:80%;" /></p>
+<p>打乱公式：<strong>x2 U2’ M U2’ M2’ U2’ M U M2’ U M2’</strong></p>
+<p>公式：</p>
+<ol>
+<li><strong>M2 U’ M2 U’ M’ U2 M2 U2 M’ U2</strong></li>
+<li><strong>R’ U’ R U’ R U R U’ R’ U R U R2 U’ R’ U2</strong></li>
+<li><strong>M2 U M U2 M2 U2 M U’ M2</strong></li>
+<li><strong>y x’ R U’ R’ U D R’ U’ D R’ U R u2’ B</strong></li>
+<li><strong>U2 R’ U’ R U’ R U R U’ R’ U R U R2 U’ R’</strong></li>
+</ol>
+<p>以上就是21种PLL 公式，大家勤加练习，变成肌肉记忆。</p>
+<p>以上所有都出自 <a href="https://maru.tw/solve-cube/algorithm" target="_blank" rel="noopener">小丸号方块屋</a> 如有不便可以通过github联系我删除</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>万丈高楼平地起,勿在浮沙筑高台</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Tigercoll 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/26/Mysql%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7%E4%B8%8E%E6%8E%88%E6%9D%83/" rel="prev" title="Mysql新建用户与授权">
+      <i class="fa fa-chevron-left"></i> Mysql新建用户与授权
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDY4NC8xMTIyMQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#typora-root-url"><span class="nav-number">1.</span> <span class="nav-text">typora-root-url:..</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顶层排列（PLL）"><span class="nav-number">2.</span> <span class="nav-text">顶层排列（PLL）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三角换："><span class="nav-number">3.</span> <span class="nav-text">三角换：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顺时针-Aa"><span class="nav-number">3.1.</span> <span class="nav-text">顺时针(Aa):</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逆时针-Ab"><span class="nav-number">3.2.</span> <span class="nav-text">逆时针(Ab):</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对角换（E）："><span class="nav-number">4.</span> <span class="nav-text">对角换（E）：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对角对棱互换（F）："><span class="nav-number">5.</span> <span class="nav-text">对角对棱互换（F）：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三角换-三棱换-Ga"><span class="nav-number">6.</span> <span class="nav-text">三角换+三棱换(Ga):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三角换-三棱换-Gb"><span class="nav-number">7.</span> <span class="nav-text">三角换+三棱换(Gb):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三角换-三棱换-Gc"><span class="nav-number">8.</span> <span class="nav-text">三角换+三棱换(Gc):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三角换-三棱换-Gd"><span class="nav-number">9.</span> <span class="nav-text">三角换+三棱换(Gd):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对棱互换-H"><span class="nav-number">10.</span> <span class="nav-text">对棱互换(H):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻角-邻棱-Ja"><span class="nav-number">11.</span> <span class="nav-text">邻角+邻棱(Ja):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻角-邻棱-Jb"><span class="nav-number">12.</span> <span class="nav-text">邻角+邻棱(Jb):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对角对棱-Na"><span class="nav-number">13.</span> <span class="nav-text">对角对棱(Na):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对角对棱-Nb"><span class="nav-number">14.</span> <span class="nav-text">对角对棱(Nb):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻角-邻棱-Ra"><span class="nav-number">15.</span> <span class="nav-text">邻角+邻棱(Ra):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻角-邻棱-Rb"><span class="nav-number">16.</span> <span class="nav-text">邻角+邻棱(Rb):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对棱-邻角-T-："><span class="nav-number">17.</span> <span class="nav-text">对棱+邻角(T)：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三棱换："><span class="nav-number">18.</span> <span class="nav-text">三棱换：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逆时针-Ua"><span class="nav-number">18.1.</span> <span class="nav-text">逆时针(Ua):</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺时针-Ub"><span class="nav-number">18.2.</span> <span class="nav-text">顺时针(Ub):</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻棱-对角-V"><span class="nav-number">19.</span> <span class="nav-text">邻棱+对角(V):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻棱-对角-Y"><span class="nav-number">20.</span> <span class="nav-text">邻棱+对角(Y):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻棱互换-Z"><span class="nav-number">21.</span> <span class="nav-text">邻棱互换(Z):</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tigercoll"
+      src="/images/p1.jpg">
+  <p class="site-author-name" itemprop="name">Tigercoll</p>
+  <div class="site-description" itemprop="description">万丈高楼平地起,勿在浮沙筑高台</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Tigercoll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tigercoll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tigercoll</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

@@ -2704,6 +2704,8 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
     <url>/2021/03/29/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="顶层排列（PLL）"><a href="#顶层排列（PLL）" class="headerlink" title="顶层排列（PLL）"></a>顶层排列（PLL）</h1><p>PLL 是魔方恢复的最后一个步骤，PLL 共有 (4！X 4！)/2种组合，排除相同情形（经过旋转），共有21种不同的图形，不含镜像的话为13种。</p>
 <p><strong>所有打乱公式都是黄底绿前</strong></p>
+<p>字母对应表：</p>
+<p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/image-20210402212818862.png" alt="image-20210402212818862"></p>
 <a id="more"></a>
 <h2 id="三角换："><a href="#三角换：" class="headerlink" title="三角换："></a>三角换：</h2><h3 id="顺时针-Aa"><a href="#顺时针-Aa" class="headerlink" title="顺时针(Aa):"></a>顺时针(Aa):</h3><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_04a.png" alt="pll 04" style="zoom:80%;" /></p>
 <p>打乱公式：<strong>x R U’ R D2’ R’ U R D2’ R2’ x</strong></p>

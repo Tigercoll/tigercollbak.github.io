@@ -2731,7 +2731,7 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
 <li><p><strong>x U R’ U’ L U R U’ r2’ U’ R U L U’ R’ U</strong></p>
 </li>
 </ol>
-<h2 id="对角对棱互换（F）："><a href="#对角对棱互换（F）：" class="headerlink" title="对角对棱互换（F）："></a>对角对棱互换（F）：</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_10a.png" alt="pll 10" style="zoom:80%;" /></p>
+<h2 id="邻角对棱互换（F）："><a href="#邻角对棱互换（F）：" class="headerlink" title="邻角对棱互换（F）："></a>邻角对棱互换（F）：</h2><p><img src="/images/%E9%AD%94%E6%96%B9PLL%E5%85%AC%E5%BC%8F/pllc_10a.png" alt="pll 10" style="zoom:80%;" /></p>
 <p>打乱公式：<strong>x2 R’ U’ R U’ R’ U R U R2’ F’ R U R U’ R’ F U R</strong></p>
 <p>公式：</p>
 <ol>

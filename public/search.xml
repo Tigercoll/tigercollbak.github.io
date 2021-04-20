@@ -2892,4 +2892,38 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
         <tag>魔方，CFOP公式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux gcc.sh 10字母病毒删除</title>
+    <url>/2021/04/20/Linux-gcc.sh-10%E5%AD%97%E6%AF%8D%E7%97%85%E6%AF%92/</url>
+    <content><![CDATA[<p>最近自己的服务器常常连不上，很卡。top查看了一下有个一个奇怪的指令，占据了百分之99的CPU，kill掉之后又会产生一个新的，</p>
+<p><img src="/images/Linux-gcc.sh-10%E5%AD%97%E6%AF%8D%E7%97%85%E6%AF%92/123.png" alt="123"></p>
+<a id="more"></a>
+<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>用    <code>chkconfig --list</code> 查看服务</p>
+<p><img src="/images/Linux-gcc.sh-10%E5%AD%97%E6%AF%8D%E7%97%85%E6%AF%92/image-20210420221016775.png" alt="image-20210420221016775"></p>
+<p>有很多自启动的10个字母的服务，全部杀掉后，重启后还是会存在。</p>
+<p>所以查看<code>crontab</code>日志</p>
+<p><img src="/images/Linux-gcc.sh-10%E5%AD%97%E6%AF%8D%E7%97%85%E6%AF%92/image-20210420223734914.png" alt="image-20210420223734914"></p>
+<p>发现每隔三分钟都会执行一下这个脚本。</p>
+<p>修改<code>etc/crontab</code>配置文件，删除 <code>*/3 * * * * root /etc/cron.hourly/cron.sh</code> 这行，然后删除脚本。发现还是不行，然后查阅资料得知需要先暂停进程后再进行处理，具体步骤如下</p>
+<h2 id="删除10字母病毒流程"><a href="#删除10字母病毒流程" class="headerlink" title="删除10字母病毒流程"></a>删除10字母病毒流程</h2><p>用<code>top</code>命令查看进程ID ，如id为 827，不要直接杀掉进程，否则会生成新的进程，停止这个进程</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -stop 827</span><br></pre></td></tr></table></figure>
+<p>停止<code>crond</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl stop crond</span><br></pre></td></tr></table></figure>
+<p>删除<code>/etc/init.d</code>下的文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -f 所有奇怪的文件</span><br></pre></td></tr></table></figure>
+<p>删除 <code>/usr/bin</code> 下的可疑文件。当然你也可以用<code>ls -lt /usr/bin | head</code> 查看最近变动的文件，如果是病毒也一起删除，其他可疑的其他可疑目录也一样。</p>
+<p>现在杀掉病毒进程，就不会重新生成了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 827</span><br></pre></td></tr></table></figure>
+<p>删除病毒</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -f /lib/libudev.so</span><br></pre></td></tr></table></figure>
+<p>最后别忘了删除<code>etc/crontab</code>配置文件下的<code>*/3 * * * * root /etc/cron.hourly/cron.sh</code>这行 和 <code>/etc/cron.hourly/gcc.sh</code> 的脚本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -f /etc/cron.hourly/gcc.sh</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
 </search>

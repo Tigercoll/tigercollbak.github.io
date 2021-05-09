@@ -2982,4 +2982,36 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
         <tag>mysql</tag>
       </tags>
   </entry>
+  <entry>
+    <title>CentOS7 AX200 无线网卡驱动安装</title>
+    <url>/2021/05/09/CentOS7-AX200-%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>最近手痒,把自己的笔记本联想小新重装成centos7,装完之后发现自己升级的网卡AX200 无法识别,只能手动安装驱动了</p>
+<a id="more"></a>
+<h2 id="查看网卡信息"><a href="#查看网卡信息" class="headerlink" title="查看网卡信息"></a>查看网卡信息</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看网卡信息</span></span><br><span class="line">lsusb</span><br><span class="line"><span class="comment"># 确认网卡的版本</span></span><br><span class="line">lspci | grep Network</span><br></pre></td></tr></table></figure>
+<h2 id="下载无线驱动"><a href="#下载无线驱动" class="headerlink" title="下载无线驱动"></a>下载无线驱动</h2><p><a href="https://www.intel.cn/content/www/cn/zh/support/articles/000005511/wireless.html" target="_blank" rel="noopener">英特尔官方驱动</a></p>
+<p><img src="/images/CentOS7-AX200-%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/image-20210508161335874.png" alt="image-20210508161335874"></p>
+<font color="red">注意!这边的网卡驱动内核要求需要5.1以上</font>
+
+<h2 id="查看内核版本"><a href="#查看内核版本" class="headerlink" title="查看内核版本"></a>查看内核版本</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看内核 uname -r</span></span><br><span class="line">3.10.0-514.26.2.el7.x86_64</span><br></pre></td></tr></table></figure>
+<h2 id="升级内核"><a href="#升级内核" class="headerlink" title="升级内核"></a>升级内核</h2><h3 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 更新</span></span><br><span class="line">yum update -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入elrepo的key</span></span><br><span class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装7.x版本的ELRepo</span></span><br><span class="line">rpm -Uvh https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装新版本内核</span></span><br><span class="line">yum --enablerepo=elrepo-kernel install kernel<span class="_">-lt</span> -y</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">yum --enablerepo=elrepo-kernel install kernel-ml -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># cetnos 7.x提供了ml和lt两个版本的内核</span></span><br><span class="line"><span class="comment"># ml为稳定版</span></span><br><span class="line"><span class="comment"># lt为开发版</span></span><br></pre></td></tr></table></figure>
+<h3 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h3><h4 id="下载内核"><a href="#下载内核" class="headerlink" title="下载内核"></a>下载内核</h4><p>访问网页:<a href="https://elrepo.org/linux/kernel/el7/x86_64/RPMS/" target="_blank" rel="noopener">https://elrepo.org/linux/kernel/el7/x86_64/RPMS/</a></p>
+<p><img src="/images/CentOS7-AX200-%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/image-20210508154506906.png" alt="image-20210508154506906"></p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># kernel-ml-5.12.2-1.el7.elrepo.x86_64.rpm</span></span><br><span class="line"><span class="comment"># kernel-ml-devel-5.12.2-1.el7.elrepo.x86_64.rpm</span></span><br><span class="line"><span class="comment"># 将这两个都下了 然后放到任意目录下,只要你找得到就行</span></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">yum -y install kernel-ml-5.12.2-1.el7.elrepo.x86_64.rpm</span><br><span class="line">yum -y install kernel-ml-devel-5.12.2-1.el7.elrepo.x86_64.rpm</span><br></pre></td></tr></table></figure>
+<h4 id="修改内核顺序"><a href="#修改内核顺序" class="headerlink" title="修改内核顺序"></a>修改内核顺序</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看内核顺序</span></span><br><span class="line">awk -F\<span class="string">' '</span><span class="variable">$1</span>==<span class="string">"menuentry "</span> &#123;<span class="built_in">print</span> i++ <span class="string">" : "</span> <span class="variable">$2</span>&#125;<span class="string">' /etc/grub2.cfg</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/CentOS7-AX200-%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/image-20210508160125943.png" alt="image-20210508160125943"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 我们看到我们的内核现在在1的位置,所以我们需要修改内核启动顺序</span></span><br><span class="line">vim /etc/default/grub</span><br></pre></td></tr></table></figure>
+<p><img src="/images/CentOS7-AX200-%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/image-20210508160253533.png" alt="image-20210508160253533"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过grub2-mkconfig 命令来重建内核配置</span></span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure>
+<p><img src="/images/CentOS7-AX200-%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/image-20210508160444635.png" alt="image-20210508160444635"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 重启</span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<h2 id="安装网卡驱动"><a href="#安装网卡驱动" class="headerlink" title="安装网卡驱动"></a>安装网卡驱动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 下载解压</span></span><br><span class="line">[root@fdm ~]<span class="comment"># tar -zxvf iwlwifi-cc-46.3cfab8da.0.tgz</span></span><br><span class="line">[root@fdm ~]<span class="comment"># cd iwlwifi-cc-46.3cfab8da.0/</span></span><br><span class="line"><span class="comment"># 将文件复制到指定目录  /lib/firmware/</span></span><br><span class="line">[root@fdm iwlwifi-8265-ucode-22.361476.0]<span class="comment"># cp -i iwlwifi-cc-a0-46.ucode /lib/firmware/</span></span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>AX200无线网卡</tag>
+      </tags>
+  </entry>
 </search>

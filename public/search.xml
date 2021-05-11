@@ -3050,6 +3050,8 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
 <p><img src="/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511233801585.png" alt="image-20210511233801585"></p>
 <p>我们执行下面的,直接安装的有问题.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># clone</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/powerline/fonts.git --depth=1</span><br><span class="line"><span class="comment"># install</span></span><br><span class="line"><span class="built_in">cd</span> fonts</span><br><span class="line">./install.sh</span><br><span class="line"><span class="comment"># clean-up a bit</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">rm -rf fonts</span><br></pre></td></tr></table></figure>
+<p>当然安装完千万不要忘记在终端中选择字体</p>
+<p><img src="/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511234158686.png" alt="image-20210511234158686"></p>
 <h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo sh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;raw.github.com&#x2F;robbyrussell&#x2F;oh-my-zsh&#x2F;master&#x2F;tools&#x2F;uninstall.sh)&quot;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Utunbu</category>

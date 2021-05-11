@@ -3014,4 +3014,49 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
         <tag>AX200无线网卡</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Utunbu安装zsh以及oh-my-zsh插件</title>
+    <url>/2021/05/11/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<p>捣鼓了好几天的centos,发现centos的对家用本的兼容性实在是不太行,虽然已经使用过很多台centos的服务器了,但最终还是败给了对家用本的驱动支持,果然RHEL还是只适合于服务器,终于还是转战了Utunbu,毕竟Utunbu有着漂亮的用户界面，完善的包管理系统，强大的软件源支持，丰富的技术社区，Ubuntu还对大多数硬件有着良好的兼容性.</p>
+<p>因为苹果电脑自带的zsh非常好用,所以我们Utunbu下也安装一下.</p>
+<a id="more"></a>
+<h2 id="安装zsh"><a href="#安装zsh" class="headerlink" title="安装zsh"></a>安装zsh</h2><p>我们先来查看我们的电脑有哪些shell</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看本地有那些shell</span></span><br><span class="line">cat /etc/shells </span><br><span class="line"><span class="comment"># /etc/shells: valid login shells</span></span><br><span class="line">/bin/sh</span><br><span class="line">/bin/bash</span><br><span class="line">/usr/bin/bash</span><br><span class="line">/bin/rbash</span><br><span class="line">/usr/bin/rbash</span><br><span class="line">/bin/dash</span><br><span class="line">/usr/bin/dash</span><br></pre></td></tr></table></figure>
+<p>如果你用 Redhat Linux，执行：<code>sudo yum install zsh</code><br>如果你用 Ubuntu Linux，执行：<code>sudo apt install zsh</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装zsh shell</span></span><br><span class="line">sudo apt install zsh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 zsh 设置为系统默认 shell</span></span><br><span class="line">sudo chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<p>这样我们就安装好了zsh 但是 这样的zsh 还是很丑,我们需要配置他,由于配置zsh太过复杂,所以有人开发了一个插件来简化我们的配置</p>
+<h2 id="安装oh-my-zsh插件"><a href="#安装oh-my-zsh插件" class="headerlink" title="安装oh-my-zsh插件"></a>安装oh-my-zsh插件</h2><p>可以通过 curl 或 wget 两种方式来安装，用一条命令即可安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在此之前如果你没有安装过git 会提示你安装git</span></span><br><span class="line">sudo apt install git</span><br><span class="line"></span><br><span class="line"><span class="comment"># curl 安装</span></span><br><span class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># wget 安装</span></span><br><span class="line">sh -c <span class="string">"<span class="variable">$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>"</span></span><br></pre></td></tr></table></figure>
+<p>安装完后出现下图:</p>
+<p><img src="/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511223341679.png" alt="image-20210511223341679"></p>
+<h2 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h2><h3 id="安装autojump自动跳转插件"><a href="#安装autojump自动跳转插件" class="headerlink" title="安装autojump自动跳转插件"></a>安装autojump自动跳转插件</h3><p>官网：<a href="https://github.com/wting/autojump" target="_blank" rel="noopener">https://github.com/wting/autojump</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install autojump</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置</span></span><br><span class="line">vim  ~/.zshrc</span><br><span class="line"><span class="comment">#在最后一行加入，注意点后面是一个空格</span></span><br><span class="line">. /usr/share/autojump/autojump.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用source 生效</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h3 id="安装zsh-syntax-highlighting语法高亮插件"><a href="#安装zsh-syntax-highlighting语法高亮插件" class="headerlink" title="安装zsh-syntax-highlighting语法高亮插件"></a>安装zsh-syntax-highlighting语法高亮插件</h3><p>官网：<a href="https://github.com/zsh-users/zsh-syntax-highlighting" target="_blank" rel="noopener">https://github.com/zsh-users/zsh-syntax-highlighting</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"source <span class="variable">$&#123;(q-)PWD&#125;</span>/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"</span> &gt;&gt; <span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用source 生效</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h3 id="安装zsh-autosuggestions语法历史记录插件"><a href="#安装zsh-autosuggestions语法历史记录插件" class="headerlink" title="安装zsh-autosuggestions语法历史记录插件"></a>安装zsh-autosuggestions语法历史记录插件</h3><p>官网：<a href="https://github.com/zsh-users/zsh-autosuggestions" target="_blank" rel="noopener">https://github.com/zsh-users/zsh-autosuggestions</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">git <span class="built_in">clone</span> git://github.com/zsh-users/zsh-autosuggestions <span class="variable">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑  ~/.zshrc 在plugins=(zsh-autosuggestions)加上</span></span><br><span class="line">plugins=(git  zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
+<p>然后会发现上面这句话是不会生效的。这里科普一下：在~/.oh-my-zsh/plugins下有很多插件，直接使用plugins=(ant mvn svn git)这样的命令是可以直接加载插件的。</p>
+<p>经过研究发现，如果使用plugins去执行插件的，首先要在本机已经安装了这个软件之后才可以使用。且这种方式在Ubuntu下不支持命令去执行，只能放在.zshrc文件下使用，然后再通过source ~/.zshrc使其生效。这个是对于Ubuntu比较吭的地方。</p>
+<p>所以上面的plugins要放在~/.zshrc，具体修改如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># 在最后新增一行</span></span><br><span class="line"><span class="built_in">source</span> <span class="variable">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用source 生效</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<p>输入命令时，会用浅色字体给出建议的命令，按 → 即可自动补全。</p>
+<h3 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h3><p>主题github地址：<a href="https://link.zhihu.com/?target=https%3A//github.com/robbyrussell/oh-my-zsh/wiki/Themes">https://github.com/robbyrussell/oh-my-zsh/wiki/Themes</a> oh-my-zsh自带了很多好看的主题，Rocken选择的是<code>ys</code>主题。 我们可以在上方的<a href="https://link.zhihu.com/?target=https%3A//github.com/robbyrussell/oh-my-zsh/wiki/Themes">github地址</a>中选择自己喜欢的主题，然后按照我们下面的步骤进行配置： 编辑<code>.zshrc</code>文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo vim ~/.zshrc</span><br></pre></td></tr></table></figure>
+<p>找到ZSH_THEME修改为你喜欢的主题</p>
+<p><img src="/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511223827207.png" alt="image-20210511223827207"></p>
+<p>这里如果使用<code>agnoster</code>主题的话会出现乱码</p>
+<p>需要在utunbu中添加字体</p>
+<p>打开官网:<a href="https://github.com/powerline/fonts" target="_blank" rel="noopener">https://github.com/powerline/fonts</a></p>
+<p><img src="/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511233801585.png" alt="image-20210511233801585"></p>
+<p>我们执行下面的,直接安装的有问题.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># clone</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/powerline/fonts.git --depth=1</span><br><span class="line"><span class="comment"># install</span></span><br><span class="line"><span class="built_in">cd</span> fonts</span><br><span class="line">./install.sh</span><br><span class="line"><span class="comment"># clean-up a bit</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">rm -rf fonts</span><br></pre></td></tr></table></figure>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo sh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;raw.github.com&#x2F;robbyrussell&#x2F;oh-my-zsh&#x2F;master&#x2F;tools&#x2F;uninstall.sh)&quot;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Utunbu</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>Utunbu</tag>
+      </tags>
+  </entry>
 </search>

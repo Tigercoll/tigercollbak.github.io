@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tigercoll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
+  </script>
+
+  <meta name="description" content="捣鼓了好几天的centos,发现centos的对家用本的兼容性实在是不太行,虽然已经使用过很多台centos的服务器了,但最终还是败给了对家用本的驱动支持,果然RHEL还是只适合于服务器,终于还是转战了Utunbu,毕竟Utunbu有着漂亮的用户界面，完善的包管理系统，强大的软件源支持，丰富的技术社区，Ubuntu还对大多数硬件有着良好的兼容性. 因为苹果电脑自带的zsh非常好用,所以我们Utun">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Utunbu安装zsh以及oh-my-zsh插件">
+<meta property="og:url" content="https://tigercoll.github.io/2021/05/11/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Tigercoll&#39;s blog">
+<meta property="og:description" content="捣鼓了好几天的centos,发现centos的对家用本的兼容性实在是不太行,虽然已经使用过很多台centos的服务器了,但最终还是败给了对家用本的驱动支持,果然RHEL还是只适合于服务器,终于还是转战了Utunbu,毕竟Utunbu有着漂亮的用户界面，完善的包管理系统，强大的软件源支持，丰富的技术社区，Ubuntu还对大多数硬件有着良好的兼容性. 因为苹果电脑自带的zsh非常好用,所以我们Utun">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tigercoll.github.io/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511223341679.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511223827207.png">
+<meta property="og:image" content="https://tigercoll.github.io/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511233801585.png">
+<meta property="article:published_time" content="2021-05-11T14:01:43.294Z">
+<meta property="article:modified_time" content="2021-05-11T15:38:55.267Z">
+<meta property="article:author" content="Tigercoll">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="Utunbu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tigercoll.github.io/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511223341679.png">
+
+<link rel="canonical" href="https://tigercoll.github.io/2021/05/11/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Utunbu安装zsh以及oh-my-zsh插件 | Tigercoll's blog</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a96c4a898a5cb3af691471bb9804141d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+	
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tigercoll's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/Tigercoll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tigercoll.github.io/2021/05/11/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/p1.jpg">
+      <meta itemprop="name" content="Tigercoll">
+      <meta itemprop="description" content="万丈高楼平地起,勿在浮沙筑高台">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tigercoll's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Utunbu安装zsh以及oh-my-zsh插件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-11 22:01:43 / 修改时间：23:38:55" itemprop="dateCreated datePublished" datetime="2021-05-11T22:01:43+08:00">2021-05-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Utunbu/" itemprop="url" rel="index"><span itemprop="name">Utunbu</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>捣鼓了好几天的centos,发现centos的对家用本的兼容性实在是不太行,虽然已经使用过很多台centos的服务器了,但最终还是败给了对家用本的驱动支持,果然RHEL还是只适合于服务器,终于还是转战了Utunbu,毕竟Utunbu有着漂亮的用户界面，完善的包管理系统，强大的软件源支持，丰富的技术社区，Ubuntu还对大多数硬件有着良好的兼容性.</p>
+<p>因为苹果电脑自带的zsh非常好用,所以我们Utunbu下也安装一下.</p>
+<a id="more"></a>
+<h2 id="安装zsh"><a href="#安装zsh" class="headerlink" title="安装zsh"></a>安装zsh</h2><p>我们先来查看我们的电脑有哪些shell</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看本地有那些shell</span></span><br><span class="line">cat /etc/shells </span><br><span class="line"><span class="comment"># /etc/shells: valid login shells</span></span><br><span class="line">/bin/sh</span><br><span class="line">/bin/bash</span><br><span class="line">/usr/bin/bash</span><br><span class="line">/bin/rbash</span><br><span class="line">/usr/bin/rbash</span><br><span class="line">/bin/dash</span><br><span class="line">/usr/bin/dash</span><br></pre></td></tr></table></figure>
+<p>如果你用 Redhat Linux，执行：<code>sudo yum install zsh</code><br>如果你用 Ubuntu Linux，执行：<code>sudo apt install zsh</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装zsh shell</span></span><br><span class="line">sudo apt install zsh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 zsh 设置为系统默认 shell</span></span><br><span class="line">sudo chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<p>这样我们就安装好了zsh 但是 这样的zsh 还是很丑,我们需要配置他,由于配置zsh太过复杂,所以有人开发了一个插件来简化我们的配置</p>
+<h2 id="安装oh-my-zsh插件"><a href="#安装oh-my-zsh插件" class="headerlink" title="安装oh-my-zsh插件"></a>安装oh-my-zsh插件</h2><p>可以通过 curl 或 wget 两种方式来安装，用一条命令即可安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在此之前如果你没有安装过git 会提示你安装git</span></span><br><span class="line">sudo apt install git</span><br><span class="line"></span><br><span class="line"><span class="comment"># curl 安装</span></span><br><span class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># wget 安装</span></span><br><span class="line">sh -c <span class="string">"<span class="variable">$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>"</span></span><br></pre></td></tr></table></figure>
+<p>安装完后出现下图:</p>
+<p><img src="/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511223341679.png" alt="image-20210511223341679"></p>
+<h2 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h2><h3 id="安装autojump自动跳转插件"><a href="#安装autojump自动跳转插件" class="headerlink" title="安装autojump自动跳转插件"></a>安装autojump自动跳转插件</h3><p>官网：<a href="https://github.com/wting/autojump" target="_blank" rel="noopener">https://github.com/wting/autojump</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install autojump</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置</span></span><br><span class="line">vim  ~/.zshrc</span><br><span class="line"><span class="comment">#在最后一行加入，注意点后面是一个空格</span></span><br><span class="line">. /usr/share/autojump/autojump.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用source 生效</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h3 id="安装zsh-syntax-highlighting语法高亮插件"><a href="#安装zsh-syntax-highlighting语法高亮插件" class="headerlink" title="安装zsh-syntax-highlighting语法高亮插件"></a>安装zsh-syntax-highlighting语法高亮插件</h3><p>官网：<a href="https://github.com/zsh-users/zsh-syntax-highlighting" target="_blank" rel="noopener">https://github.com/zsh-users/zsh-syntax-highlighting</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"source <span class="variable">$&#123;(q-)PWD&#125;</span>/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"</span> &gt;&gt; <span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用source 生效</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h3 id="安装zsh-autosuggestions语法历史记录插件"><a href="#安装zsh-autosuggestions语法历史记录插件" class="headerlink" title="安装zsh-autosuggestions语法历史记录插件"></a>安装zsh-autosuggestions语法历史记录插件</h3><p>官网：<a href="https://github.com/zsh-users/zsh-autosuggestions" target="_blank" rel="noopener">https://github.com/zsh-users/zsh-autosuggestions</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">git <span class="built_in">clone</span> git://github.com/zsh-users/zsh-autosuggestions <span class="variable">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑  ~/.zshrc 在plugins=(zsh-autosuggestions)加上</span></span><br><span class="line">plugins=(git  zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
+<p>然后会发现上面这句话是不会生效的。这里科普一下：在~/.oh-my-zsh/plugins下有很多插件，直接使用plugins=(ant mvn svn git)这样的命令是可以直接加载插件的。</p>
+<p>经过研究发现，如果使用plugins去执行插件的，首先要在本机已经安装了这个软件之后才可以使用。且这种方式在Ubuntu下不支持命令去执行，只能放在.zshrc文件下使用，然后再通过source ~/.zshrc使其生效。这个是对于Ubuntu比较吭的地方。</p>
+<p>所以上面的plugins要放在~/.zshrc，具体修改如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># 在最后新增一行</span></span><br><span class="line"><span class="built_in">source</span> <span class="variable">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用source 生效</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<p>输入命令时，会用浅色字体给出建议的命令，按 → 即可自动补全。</p>
+<h3 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h3><p>主题github地址：<a href="https://link.zhihu.com/?target=https%3A//github.com/robbyrussell/oh-my-zsh/wiki/Themes">https://github.com/robbyrussell/oh-my-zsh/wiki/Themes</a> oh-my-zsh自带了很多好看的主题，Rocken选择的是<code>ys</code>主题。 我们可以在上方的<a href="https://link.zhihu.com/?target=https%3A//github.com/robbyrussell/oh-my-zsh/wiki/Themes">github地址</a>中选择自己喜欢的主题，然后按照我们下面的步骤进行配置： 编辑<code>.zshrc</code>文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim ~/.zshrc</span><br></pre></td></tr></table></figure>
+<p>找到ZSH_THEME修改为你喜欢的主题</p>
+<p><img src="/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511223827207.png" alt="image-20210511223827207"></p>
+<p>这里如果使用<code>agnoster</code>主题的话会出现乱码</p>
+<p>需要在utunbu中添加字体</p>
+<p>打开官网:<a href="https://github.com/powerline/fonts" target="_blank" rel="noopener">https://github.com/powerline/fonts</a></p>
+<p><img src="/images/Utunbu%E5%AE%89%E8%A3%85zsh%E4%BB%A5%E5%8F%8Aoh-my-zsh%E6%8F%92%E4%BB%B6/image-20210511233801585.png" alt="image-20210511233801585"></p>
+<p>我们执行下面的,直接安装的有问题.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># clone</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/powerline/fonts.git --depth=1</span><br><span class="line"><span class="comment"># install</span></span><br><span class="line"><span class="built_in">cd</span> fonts</span><br><span class="line">./install.sh</span><br><span class="line"><span class="comment"># clean-up a bit</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">rm -rf fonts</span><br></pre></td></tr></table></figure>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;raw.github.com&#x2F;robbyrussell&#x2F;oh-my-zsh&#x2F;master&#x2F;tools&#x2F;uninstall.sh)&quot;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>万丈高楼平地起,勿在浮沙筑高台</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Tigercoll 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+              <a href="/tags/Utunbu/" rel="tag"><i class="fa fa-tag"></i> Utunbu</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/09/CentOS7-AX200-%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/" rel="prev" title="CentOS7 AX200 无线网卡驱动安装">
+      <i class="fa fa-chevron-left"></i> CentOS7 AX200 无线网卡驱动安装
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDY4NC8xMTIyMQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装zsh"><span class="nav-number">1.</span> <span class="nav-text">安装zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装oh-my-zsh插件"><span class="nav-number">2.</span> <span class="nav-text">安装oh-my-zsh插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置oh-my-zsh"><span class="nav-number">3.</span> <span class="nav-text">配置oh-my-zsh</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装autojump自动跳转插件"><span class="nav-number">3.1.</span> <span class="nav-text">安装autojump自动跳转插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装zsh-syntax-highlighting语法高亮插件"><span class="nav-number">3.2.</span> <span class="nav-text">安装zsh-syntax-highlighting语法高亮插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装zsh-autosuggestions语法历史记录插件"><span class="nav-number">3.3.</span> <span class="nav-text">安装zsh-autosuggestions语法历史记录插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置主题"><span class="nav-number">3.4.</span> <span class="nav-text">配置主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卸载"><span class="nav-number">4.</span> <span class="nav-text">卸载</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tigercoll"
+      src="/images/p1.jpg">
+  <p class="site-author-name" itemprop="name">Tigercoll</p>
+  <div class="site-description" itemprop="description">万丈高楼平地起,勿在浮沙筑高台</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Tigercoll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tigercoll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tigercoll</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

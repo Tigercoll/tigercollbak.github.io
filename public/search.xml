@@ -3092,4 +3092,37 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
         <tag>Linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>pyenv安装以及问题排查</title>
+    <url>/2021/05/19/pyenv%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</url>
+    <content><![CDATA[<h2 id="Pyenv介绍"><a href="#Pyenv介绍" class="headerlink" title="Pyenv介绍"></a>Pyenv介绍</h2><p>pyenv lets you easily switch between multiple versions of Python. It’s simple, unobtrusive, and follows the UNIX tradition of single-purpose tools that do one thing well.</p>
+<h2 id="安装Pyenv的原因"><a href="#安装Pyenv的原因" class="headerlink" title="安装Pyenv的原因"></a>安装Pyenv的原因</h2><p>安装pyenv是由于服务器上的python版本与我们开发的版本不一致，由于服务器很多服务都依赖于服务器上python版本，我们不能轻易的升级，如果升级会导致各种问题，所以我们引入了pyenv</p>
+<a id="more"></a>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li><p>你的电脑上肯定安装了<code>git</code>，如果没有的话请先安装。</p>
+</li>
+<li><p>从官方库中克隆，因为在国内使用curl安装的话会非常慢。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/pyenv/pyenv.git ~/.pyenv</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加环境</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'export PATH=~/.pyenv/bin:$PATH'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export PYENV_ROOT=~/.pyenv'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="comment"># 很多教程里是这个，echo 'eval "$(pyenv init -)"' &gt;&gt; ~/.bashrc 但是会提示你，所以需要改成下面的，如果没提示就按这个来</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'eval "$(pyenv init --path)"'</span> &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新载入一下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pyenv install --list <span class="comment"># 列出可安装版本</span></span><br><span class="line">pyenv install &lt;version&gt; <span class="comment"># 安装对应版本</span></span><br><span class="line">pyenv install -v &lt;version&gt; <span class="comment"># 安装对应版本，若发生错误，可以显示详细的错误信息</span></span><br><span class="line">pyenv versions <span class="comment"># 显示当前使用的python版本</span></span><br><span class="line">pyenv <span class="built_in">which</span> python <span class="comment"># 显示当前python安装路径</span></span><br><span class="line">pyenv global &lt;version&gt; <span class="comment"># 设置默认Python版本</span></span><br><span class="line">pyenv <span class="built_in">local</span> &lt;version&gt; <span class="comment"># 当前路径创建一个.python-version, 以后进入这个目录自动切换为该版本</span></span><br></pre></td></tr></table></figure>
+<h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>当我们安装时会由于网速的问题，导致安装很慢</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在~/.pyenv下创建一个cache目录</span></span><br><span class="line">sudo mkdir ~/.pyenv/cache</span><br><span class="line"><span class="comment"># 然后我们从国内源把安装包丢到这个目录下</span></span><br><span class="line">wget https://npm.taobao.org/mirrors/python/3.7.5/Python-3.7.5.tar.xz ~/.pyenv/cache</span><br><span class="line"><span class="comment"># 然后我们就可以安装了</span></span><br><span class="line">pyenv install 3.7.5 -v</span><br></pre></td></tr></table></figure>
+<p>如果提示我们缺少必要的库就安装一下就好了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>版本</tag>
+      </tags>
+  </entry>
 </search>

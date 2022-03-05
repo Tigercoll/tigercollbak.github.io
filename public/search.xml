@@ -3199,7 +3199,7 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
       </categories>
       <tags>
         <tag>搜索</tag>
-        <tag>‘es’</tag>
+        <tag>es</tag>
       </tags>
   </entry>
   <entry>
@@ -3365,6 +3365,79 @@ x=(x^{(1)},x^{(2)},...x^{(i)},,...,x^{(n)})^{T}</script><p>监督学习从训练
 <h2 id="定义服务"><a href="#定义服务" class="headerlink" title="定义服务"></a>定义服务</h2><p>Protocol Buffers使用service定义RPC服务。</p>
 <figure class="highlight protobuf"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">HelloRequest</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> greeting = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">HelloResponse</span> </span>&#123;</span><br><span class="line">  <span class="built_in">string</span> reply = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">service</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">rpc</span> SayHello (HelloRequest) <span class="keyword">returns</span> (HelloResponse) &#123;&#125;</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
 <p><strong>注意：一个service中可定义多个方法。</strong></p>
+]]></content>
+      <categories>
+        <category>PRC</category>
+      </categories>
+      <tags>
+        <tag>PRC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PRC</title>
+    <url>/2022/03/05/PRC/</url>
+    <content><![CDATA[<h2 id="什么是RPC"><a href="#什么是RPC" class="headerlink" title="什么是RPC"></a>什么是RPC</h2><p><strong>远程过程调用</strong>（英语：<strong>Remote Procedure Call</strong>，缩写为 <strong>RPC</strong>，也叫<strong>远程程序调用</strong>）是一个计算机通信协议。该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。如果涉及的软件采用面向对象编程，那么远程过程调用亦可称作<strong>远程调用</strong>或<strong>远程方法调用</strong>。</p>
+<p><img src="/images/PRC/RPC%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="RPC示意图"></p>
+<a id="more"></a>
+<h2 id="背景与用途"><a href="#背景与用途" class="headerlink" title="背景与用途"></a>背景与用途</h2><p>在单台计算机中，我们可以通过程序调用来传递控制和数据；或者说通过程序调用，我们可以将多个程序组成一个整体来实现某个功能。</p>
+<p>如果将这种调用机制推广到多台彼此间可以进行网络通讯的计算机，由多台计算机中的多个程序组成一个整体来实现某个功能，这也是可以的。调用的一方（发起远程过程调用，然后调用这方的环境挂起，参数通过网络传递给被调用方，被调用的一方执行程序，当程序执行完成后，产生的结果再通过网络回传给调用的一方，调用的一方恢复继续执行。这样一种原型思想，就是我们所说的RPC远程过程调用。</p>
+<p>RPC这种思想最早可以追溯到1976年，RPC的发展到今天已经40年有余了。</p>
+<p>如今的计算机应用中，单机性能上很难承受住产品的压力，需要不断扩充多台机器来提升整体的性能。同时为了充分利用这些集群里的计算机，需要对其从架构上进行划分，以提供不同的服务，服务间相互调用完成整个产品的功能。RPC就能帮助我们解决这些服务间的信息传递和调用。</p>
+<h2 id="RPC结构"><a href="#RPC结构" class="headerlink" title="RPC结构"></a>RPC结构</h2><p>RPC的设计思想是力图<strong>使远程调用中的通讯细节对于使用者透明</strong>，调用双方无需关心网络通讯的具体实现。因而实现RPC要进行一定的封装。</p>
+<p>RPC原理上是按如下结构流程进行实现的。</p>
+<p><img src="/images/PRC/RPC%E7%BB%93%E6%9E%84.png" alt="RPC结构"></p>
+<h3 id="流程："><a href="#流程：" class="headerlink" title="流程："></a>流程：</h3><ol>
+<li>调用者（Caller, 也叫客户端、Client）以本地调用的方式发起调用；</li>
+<li>Client stub（客户端存根，可理解为辅助助手）收到调用后，负责将被调用的方法名、参数等打包编码成特定格式的能进行网络传输的消息体；</li>
+<li>Client stub将消息体通过网络发送给对端（服务端）</li>
+<li>Server stub（服务端存根，同样可理解为辅助助手）收到通过网络接收到消息后按照相应格式进行拆包解码，获取方法名和参数；</li>
+<li>Server stub根据方法名和参数进行本地调用；</li>
+<li>被调用者（Callee，也叫Server）本地调用执行后将结果返回给server stub;</li>
+<li>Server stub将返回值打包编码成消息，并通过网络发送给对端（客户端）；</li>
+<li>Client stub收到消息后，进行拆包解码，返回给Client；</li>
+<li>Client得到本次RPC调用的最终结果。</li>
+</ol>
+<h2 id="gRPC"><a href="#gRPC" class="headerlink" title="gRPC"></a>gRPC</h2><ul>
+<li><p>gRPC是由Google公司开源的高性能RPC框架。</p>
+</li>
+<li><p>gRPC支持多语言</p>
+<p>gRPC原生使用C、Java、Go进行了三种实现，而C语言实现的版本进行封装后又支持C++、C#、Node、ObjC、 Python、Ruby、PHP等开发语言</p>
+</li>
+<li><p>gRPC支持多平台</p>
+<p>支持的平台包括：Linux、Android、iOS、MacOS、Windows</p>
+</li>
+<li><p>gRPC的消息协议使用Google自家开源的Protocol Buffers协议机制（proto3） 序列化</p>
+</li>
+<li><p>gRPC的传输使用HTTP/2标准，支持双向流和连接多路复用</p>
+</li>
+</ul>
+<p><img src="/images/PRC/grpc.png" alt="grpc"></p>
+<h2 id="Protocol-Buffers"><a href="#Protocol-Buffers" class="headerlink" title="Protocol Buffers"></a>Protocol Buffers</h2><p>gRPC的消息协议使用Google自家开源的Protocol Buffers协议机制（proto3） 序列化</p>
+<p>详情可看我的另一篇文章 <a href="https://tigercoll.top/2022/03/05/Protocol-Buffers/" target="_blank" rel="noopener">Protocol Buffers</a></p>
+<h2 id="接口定义"><a href="#接口定义" class="headerlink" title="接口定义"></a>接口定义</h2><h3 id="接口原型"><a href="#接口原型" class="headerlink" title="接口原型"></a>接口原型</h3><p>接口名称： proto_test</p>
+<p>调用参数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ProtoTestReuqest:</span><br><span class="line">    id     			<span class="comment"># id</span></span><br><span class="line">    test_content   	 <span class="comment"># 测试内容</span></span><br></pre></td></tr></table></figure>
+<p>返回数据：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ProtoTestResponse:</span><br><span class="line">    callback_id    <span class="comment"># 返回测试ID</span></span><br><span class="line">    result         <span class="comment"># 结果</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用Protobuf-定义的接口如下"><a href="#使用Protobuf-定义的接口如下" class="headerlink" title="使用Protobuf 定义的接口如下"></a>使用Protobuf 定义的接口如下</h3><p><strong>使用protobuf定义的接口文件通常以proto作为文件后缀名</strong></p>
+<p>在rpc目录下新建protoTest.proto文件</p>
+<figure class="highlight protobuf"><table><tr><td class="code"><pre><span class="line">syntax = <span class="string">"proto3"</span>; <span class="comment">// 在gRPC中推荐使用proto3版本。</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">ProtoTestReuqest</span> </span>&#123;</span><br><span class="line">    <span class="built_in">int32</span> id=<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">string</span> test_content=<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">ProtoTestResponse</span> </span>&#123;</span><br><span class="line">	<span class="built_in">int32</span> callback_id=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">string</span> result=<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">service</span> <span class="title">ProtoTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">rpc</span> proto_test(ProtoTestReuqest) <span class="keyword">returns</span>(ProtoTestResponse) &#123;&#125;</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h2><h3 id="安装protobuf编译器和grpc库"><a href="#安装protobuf编译器和grpc库" class="headerlink" title="安装protobuf编译器和grpc库"></a>安装protobuf编译器和grpc库</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install grpcio-tools</span><br></pre></td></tr></table></figure>
+<h3 id="编译生成代码"><a href="#编译生成代码" class="headerlink" title="编译生成代码"></a>编译生成代码</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. protoTest.proto</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-I</code>表示搜索proto文件中被导入文件的目录</li>
+<li><code>--python_out</code>表示保存生成Python文件的目录，生成的文件中包含接口定义中的数据类型</li>
+<li><code>--grpc_python_out</code>表示保存生成Python文件的目录，生成的文件中包含接口定义中的服务类型</li>
+</ul>
+<p>在rpc目录下执行上述命令，会自动生成如下两个rpc调用辅助代码模块：</p>
+<ul>
+<li>protoTest_pb2.py 保存根据接口定义文件中的数据类型生成的python类</li>
+<li>protoTest_pb2_grpc.py 保存根据接口定义文件中的服务方法类型生成的python调用RPC方法</li>
+</ul>
+<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><p>在rpc目录下新建server.py文件,用来补全服务端代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> protoTest_pb2</span><br><span class="line"><span class="keyword">import</span> protoTest_pb2_grpc</span><br><span class="line"><span class="keyword">import</span> grpc</span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># rpc接口定义中服务对应成Python的类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProtoTestService</span><span class="params">(protoTest_pb2_grpc.ProtoTestServicer)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 在接口定义的同名方法中补全，被调用时应该执行的逻辑</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">proto_test</span><span class="params">(self, request, context)</span>:</span></span><br><span class="line">        <span class="comment"># request是调用的请求数据对象</span></span><br><span class="line">        id = request.id</span><br><span class="line">        test_content = request.test_content</span><br><span class="line">        print(id,test_content)</span><br><span class="line">        response = protoTest_pb2.ProtoTestResponse()</span><br><span class="line">        response.callback_id = id+<span class="number">1</span></span><br><span class="line">        response.result = <span class="string">'grpc结果'</span></span><br><span class="line">        <span class="comment"># 最终要返回一个调用结果</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serve</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    rpc服务端启动方法</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 创建一个rpc服务器</span></span><br><span class="line">    server = grpc.server(ThreadPoolExecutor(max_workers=<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 向服务器中添加被调用的服务方法</span></span><br><span class="line">    protoTest_pb2_grpc.add_ProtoTestServicer_to_server(ProtoTestService(), server)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 微服务器绑定ip地址和端口</span></span><br><span class="line">    server.add_insecure_port(<span class="string">'127.0.0.1:8888'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 启动rpc服务</span></span><br><span class="line">    server.start()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># start()不会阻塞，此处需要加上循环睡眠 防止程序退出</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        time.sleep(<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    serve()</span><br></pre></td></tr></table></figure>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>在rpc目录下新建client.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> grpc</span><br><span class="line"><span class="keyword">import</span> protoTest_pb2</span><br><span class="line"><span class="keyword">import</span> protoTest_pb2_grpc</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">feed_test</span><span class="params">(stub)</span>:</span></span><br><span class="line">    <span class="comment"># 构建rpc调用的调用参数</span></span><br><span class="line">    request = protoTest_pb2.ProtoTestReuqest()</span><br><span class="line">    request.id = <span class="number">1</span></span><br><span class="line">    request.test_content = <span class="string">'发送grpc'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 通过stub进行方法调用，并接收调用返回值</span></span><br><span class="line">    ret = stub.proto_test(request)</span><br><span class="line">    print(ret.callback_id)</span><br><span class="line">    print(ret.result)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    rpc客户端调用的方法</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 使用with语句连接rpc服务器</span></span><br><span class="line">    <span class="keyword">with</span> grpc.insecure_channel(<span class="string">'127.0.0.1:8888'</span>) <span class="keyword">as</span> channel:</span><br><span class="line">        <span class="comment"># 创建调用rpc远端服务的辅助对象stub</span></span><br><span class="line">        stub = protoTest_pb2_grpc.ProtoTestStub(channel)</span><br><span class="line">        <span class="comment"># 通过stub进行rpc调用</span></span><br><span class="line">        feed_test(stub)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>PRC</category>
